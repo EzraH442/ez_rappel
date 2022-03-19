@@ -4,6 +4,9 @@ import 'package:luples_flutter/words/data/word_database_helper.dart';
 import 'package:luples_flutter/words/data/entities/word_group.dart';
 import 'package:luples_flutter/words/ui/components/routes.dart' as routes;
 
+import 'package:luples_flutter/words/ui/components/display_wordgroups.dart'
+    as components;
+
 class PracticePage extends StatefulWidget {
   const PracticePage({Key? key}) : super(key: key);
 
@@ -38,9 +41,7 @@ class _PracticePageState extends State<PracticePage> {
     );
   }
 
-  Column _buildWordgroupColumn(List<dynamic> dbRes) {
-    List<WordGroup> results = dbRes.cast<WordGroup>();
-
+  Column _buildWordgroupColumn(List<WordGroup> results) {
     return Column(children: [
       const Text("Word Groups:"),
       ListView.builder(
@@ -78,17 +79,8 @@ class _PracticePageState extends State<PracticePage> {
 
   Scaffold _displayScaffold(BuildContext context, WordDatabaseHelper db) =>
       Scaffold(
-        body: FutureBuilder<List>(
-          future: db.queryAllWordGroups(),
-          builder: (context, snapshot) {
-            return snapshot.hasData
-                ? _buildWordgroupColumn(snapshot.data!)
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  );
-          },
-        ),
-      );
+          body: components.wordgroupRowFutureBuilder(
+              context, db, _buildWordgroupColumn));
 
   @override
   Widget build(BuildContext context) => _displayScaffold(context, _db);

@@ -164,10 +164,10 @@ class WordDatabaseHelper<WordPair> {
     return db.rawUpdate('''
       UPDATE $_wordPairTableName 
       SET
-        ${_wordPairColumns["wordOne"]} = ${wp.wordOne},
-        ${_wordPairColumns["wordTwo"]} = ${wp.wordTwo},
-        ${_wordPairColumns["languageOne"]} = ${wp.languageOne},
-        ${_wordPairColumns["languageTwo"]} = ${wp.languageTwo}
+        ${_wordPairColumns["wordOne"]} = "${wp.wordOne}",
+        ${_wordPairColumns["wordTwo"]} = "${wp.wordTwo}",
+        ${_wordPairColumns["languageOne"]} = "${wp.languageOne}",
+        ${_wordPairColumns["languageTwo"]} = "${wp.languageTwo}"
       )
       WHERE ${_wordPairColumns["id"]} = ${wp.id}
     ''');
@@ -177,10 +177,10 @@ class WordDatabaseHelper<WordPair> {
     return db.rawUpdate('''
       UPDATE $_wordGroupTableName
       SET
-        ${_wordGroupColumns["name"]} = ${wg.name},
-        ${_wordGroupColumns["languageOne"]} = ${wg.languageOne},
-        ${_wordGroupColumns["languageTwo"]} = ${wg.languageTwo},
-      )
+        ${_wordGroupColumns["name"]} = "${wg.name}",
+        ${_wordGroupColumns["languageOne"]} = "${wg.languageOne}",
+        ${_wordGroupColumns["languageTwo"]} = "${wg.languageTwo}"
+      
       WHERE ${_wordGroupColumns["id"]} = ${wg.id}
     ''');
   }
