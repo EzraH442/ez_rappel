@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luples_flutter/words/data/word_database_helper.dart';
+import 'package:luples_flutter/words/ui/components/modfy_group_page/add_new_wordgroups_fragment/add_new_group_section.dart';
 import 'package:luples_flutter/words/ui/components/modfy_group_page/modify_existing_group_fragment/modify_existing_group_section.dart';
 
 class ModifyWordgroupPage extends StatefulWidget {
@@ -14,7 +15,11 @@ class _ModifyWordgroupPageState extends State<ModifyWordgroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ModifyExistingWordgroupsSection(database: _db),
-    );
+        body: Column(
+      children: [
+        ModifyExistingWordgroupsSection(database: _db),
+        AddNewWordgroupSection(database: _db),
+      ],
+    ));
   }
 }

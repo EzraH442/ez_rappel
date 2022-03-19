@@ -3,7 +3,7 @@ import 'package:luples_flutter/words/data/entities/word_group.dart';
 
 import 'package:luples_flutter/words/data/word_database_helper.dart';
 import 'package:luples_flutter/words/ui/components/display_wordgroups.dart';
-import 'package:luples_flutter/words/ui/components/modfy_group_page/modify_existing_group_fragment/modify_existing_group_row.dart';
+import 'modify_existing_group_row.dart';
 
 class ModifyExistingWordgroupsSection extends StatefulWidget {
   final WordDatabaseHelper database;
