@@ -12,7 +12,7 @@ class WordDatabaseHelper<WordPair> {
   static const _wordGroupTableName = "word_group_table";
   static const _junctionTableName = "word_group_word_pair_table";
   static const _wordPairColumns = Wordpair.columnNameMap;
-  static const _wordGroupColumns = WordGroup.columnNameMap;
+  static const _wordGroupColumns = Wordpair.columnNameMap;
   static const _junctionColumns = WordGroupWordPair.columnNameMap;
 
   static Database? _database;
@@ -91,7 +91,7 @@ class WordDatabaseHelper<WordPair> {
             ));
   }
 
-  Future<List<WordGroup>> queryAllWordGroups() async {
+  Future<List<Wordgroup>> queryAllWordgroups() async {
     Database db = await instance.database;
 
     final List<Map<String, dynamic>> maps =
@@ -104,7 +104,7 @@ class WordDatabaseHelper<WordPair> {
     ]);
     return List.generate(
         maps.length,
-        (i) => WordGroup(
+        (i) => Wordgroup(
               id: maps[i]['id'],
               name: maps[i]['name'],
               languageOne: maps[i]['language_one'],
@@ -130,7 +130,7 @@ class WordDatabaseHelper<WordPair> {
     ]);
   }
 
-  Future<int> _insertWordGroup(WordGroup wg, Database db) {
+  Future<int> _insertWordgroup(Wordgroup wg, Database db) {
     return db.rawInsert('''
       INSERT INTO word_group_table(
         ${_wordGroupColumns["name"]},
@@ -173,7 +173,7 @@ class WordDatabaseHelper<WordPair> {
     ''');
   }
 
-  Future<int> _updateWordGroup(WordGroup wg, Database db) async {
+  Future<int> _updateWordgroup(Wordgroup wg, Database db) async {
     return db.rawUpdate('''
       UPDATE $_wordGroupTableName
       SET
@@ -185,7 +185,7 @@ class WordDatabaseHelper<WordPair> {
     ''');
   }
 
-  Future<int> _delteWord(WordGroup wg, Database db) async {
+  Future<int> _delteWord(Wordpair wg, Database db) async {
     return db.rawDelete(
         'DELETE FROM $_wordPairTableName WHERE ${_wordPairColumns["id"]} = ?',
         [wg.id]);
@@ -216,8 +216,8 @@ class WordDatabaseHelper<WordPair> {
     return rowIDs;
   }
 
-  Future<int> insertWordGroup(WordGroup wg) async {
-    return await _insertWordGroup(wg, await instance.database);
+  Future<int> insertWordgroup(Wordgroup wg) async {
+    return await _insertWordgroup(wg, await instance.database);
   }
 
   Future<int> addWordpairToGroup(int wordPairId, int groupID) async {
@@ -238,19 +238,22 @@ class WordDatabaseHelper<WordPair> {
     return rowIDs;
   }
 
-  Future<int> updateWord(Wordpair wp) async {
+  Future<int> updateWordpair(Wordpair wp) async {
     return _updateWordpair(wp, await instance.database);
   }
 
-  Future<int> updateWordGroup(WordGroup wg) async {
-    return _updateWordGroup(wg, await instance.database);
+  Future<int> updateWordgroup(Wordgroup wg) async {
+    return _updateWordgroup(wg, await instance.database);
   }
 
-  Future<int> deleteWord(WordGroup wg, Database db) async {
+  Future<int> deleteWord(Wordpair wg, Database db) async {
     return _delteWord(wg, await instance.database);
   }
 
-  Future<int> removeWordFromGroup(Wordpair wp, WordGroup wg) async {
+  Future<int> removeWordFromGroupWithIds(int wpId, int wgId) async {
+    return _deleteJunctionEntry(wpId, wgId, await instance.database);
+  }
+  Future<int> removeWordFromGroup(Wordpair wp, Wordpair wg) async {
     return _deleteJunctionEntry(wp.id, wg.id, await instance.database);
   }
 }

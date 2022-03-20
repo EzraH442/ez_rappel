@@ -8,8 +8,8 @@ class AddNewWordgroupRow extends StatefulWidget {
   static const saved = 2;
 
   final int rowId;
-  final void Function(WordGroup) notifyConfirm;
-  final void Function(WordGroup) notifyCancel;
+  final void Function(Wordgroup) notifyConfirm;
+  final void Function(int, Wordgroup?) notifyCancel;
 
   const AddNewWordgroupRow(
       {Key? key,
@@ -28,7 +28,7 @@ class _AddNewWordgroupRowState extends State<AddNewWordgroupRow> {
   final _lang2EC = TextEditingController();
 
   int _state = AddNewWordgroupRow.empty;
-  WordGroup? wordGroup;
+  Wordgroup? wordGroup;
 
   @override
   void dispose() {
@@ -47,7 +47,7 @@ class _AddNewWordgroupRowState extends State<AddNewWordgroupRow> {
   _handleConfirm() {
     setState(() {
       if (true) {
-        wordGroup = WordGroup(
+        wordGroup = Wordgroup(
             id: widget.rowId,
             name: _nameEC.text,
             languageOne: _lang1EC.text,
@@ -62,11 +62,10 @@ class _AddNewWordgroupRowState extends State<AddNewWordgroupRow> {
 
   _handleCancel() {
     setState(() {
-      if (_state == AddNewWordgroupRow.saved) {
-        widget.notifyCancel(wordGroup!);
-      } else {
-        _state = AddNewWordgroupRow.empty;
-      }
+      widget.notifyCancel(widget.rowId, wordGroup);
+      _nameEC.text = "";
+      _lang1EC.text = "";
+      _lang2EC.text = "";
     });
   }
 
@@ -88,21 +87,21 @@ class _AddNewWordgroupRowState extends State<AddNewWordgroupRow> {
       Container(
         child: Row(
           children: [
-            modifyWordgroupRowTextfield(
+            modifyWordgroupRowFutureBuilder(
                 width: 250,
                 controller: _nameEC,
                 onEditingComplete: _handleChanged,
                 color: _decideColor(),
                 maxLength: 20,
                 labelText: "Name"),
-            modifyWordgroupRowTextfield(
+            modifyWordgroupRowFutureBuilder(
                 width: 100,
                 controller: _lang1EC,
                 onEditingComplete: _handleChanged,
                 color: _decideColor(),
                 maxLength: 3,
                 labelText: "lang 1"),
-            modifyWordgroupRowTextfield(
+            modifyWordgroupRowFutureBuilder(
                 width: 100,
                 controller: _lang2EC,
                 onEditingComplete: _handleChanged,

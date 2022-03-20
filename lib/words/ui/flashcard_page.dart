@@ -7,7 +7,7 @@ import 'package:luples_flutter/words/data/entities/word_pair.dart';
 import 'package:luples_flutter/words/data/word_database_helper.dart';
 
 class FlashcardPage extends StatefulWidget {
-  final Set<WordGroup> selectedWordGroups;
+  final Set<Wordgroup> selectedWordGroups;
 
   const FlashcardPage({Key? key, required this.selectedWordGroups})
       : super(key: key);
@@ -93,10 +93,10 @@ TextButton _makeFlashcard(Wordpair wordpair, bool swapOrder) {
 }
 
 Future<List<Wordpair>> _getWordsFromMultipleGroups(
-    Set<WordGroup> wgs, WordDatabaseHelper db) async {
+    Set<Wordgroup> wgs, WordDatabaseHelper db) async {
   List<Wordpair> ret = [];
 
-  for (WordGroup wg in wgs) {
+  for (Wordgroup wg in wgs) {
     ret.addAll(await db.getWordsFromGroup(wg.id));
   }
 

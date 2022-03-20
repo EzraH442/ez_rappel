@@ -25,13 +25,13 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
 
   _test() async {
     final db = WordDatabaseHelper.instance;
-    const test = WordGroup(
+    const test = Wordgroup(
         id: 0,
         name: "a group name",
         languageOne: "eng",
         languageTwo: "fre",
         dateCreated: "today!");
   
-    int id = await db.insertWordGroup(test);
+    int id = await db.insertWordgroup(test);
   }
 }

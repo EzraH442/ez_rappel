@@ -16,9 +16,9 @@ class PracticePage extends StatefulWidget {
 
 class _PracticePageState extends State<PracticePage> {
   final _db = WordDatabaseHelper.instance;
-  final _selectedForPractice = <WordGroup>{};
+  final _selectedForPractice = <Wordgroup>{};
 
-  ListTile _buildWordgroupRow(List<WordGroup> wgs, int index) {
+  ListTile _buildWordgroupRow(List<Wordgroup> wgs, int index) {
     final bool isSelected = _selectedForPractice.contains(wgs[index]);
 
     IconButton selectForPracticeIcon = IconButton(
@@ -41,7 +41,7 @@ class _PracticePageState extends State<PracticePage> {
     );
   }
 
-  Column _buildWordgroupColumn(List<WordGroup> results) {
+  Column _buildWordgroupColumn(List<Wordgroup> results) {
     return Column(children: [
       const Text("Word Groups:"),
       ListView.builder(

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:luples_flutter/words/data/entities/word_group.dart';
+import 'package:luples_flutter/words/data/entities/word_pair.dart';
 import 'package:luples_flutter/words/ui/components/display_wordgroups.dart';
 
-class ModifyWordgroupRow extends StatefulWidget {
+class ModifyWordpairRow extends StatefulWidget {
   static const int unchanged = 0;
   static const int uncommitedChanges = 1;
   static const int commited = 2;
   static const int markedForDelete = 3;
 
-  final int wordgroupId;
-  final Wordgroup oldValues;
+  final int wordpairId;
+  final Wordpair oldValues;
 
   final void Function(int id, int newStatus) notifyStatusChange;
   final void Function(int id) removeFromModified;
-  final void Function(Wordgroup) commitChanges;
+  final void Function(Wordpair) commitChanges;
 
-  const ModifyWordgroupRow({
+  const ModifyWordpairRow({
     Key? key,
-    required this.wordgroupId,
+    required this.wordpairId,
     required this.oldValues,
     required this.notifyStatusChange,
     required this.removeFromModified,
@@ -25,58 +25,54 @@ class ModifyWordgroupRow extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ModifyWordgroupRow> createState() => _ModifyWordgroupRowState();
+  State<ModifyWordpairRow> createState() => _ModifyWordpairRowState();
 }
 
-class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
-  final _nameEC = TextEditingController();
-  final _lang1EC = TextEditingController();
-  final _lang2EC = TextEditingController();
+class _ModifyWordpairRowState extends State<ModifyWordpairRow> {
+  final _wordOneEC = TextEditingController();
+  final _wordTwoEC = TextEditingController();
 
-  int status = ModifyWordgroupRow.unchanged;
-  Wordgroup? newValues;
+  int status = ModifyWordpairRow.unchanged;
+  Wordpair? newValues;
 
   @override
   void dispose() {
-    _nameEC.dispose();
-    _lang1EC.dispose();
-    _lang2EC.dispose();
+    _wordOneEC.dispose();
+    _wordTwoEC.dispose();
     super.dispose();
   }
 
   _handleCancel() {
     setState(() {
-      status = ModifyWordgroupRow.unchanged; //reset to old values
-      widget.notifyStatusChange(
-          widget.wordgroupId, ModifyWordgroupRow.commited);
+      status = ModifyWordpairRow.unchanged; //reset to old values
+      widget.notifyStatusChange(widget.wordpairId, ModifyWordpairRow.commited);
 
-      _nameEC.text = widget.oldValues.name;
-      _lang1EC.text = widget.oldValues.languageOne;
-      _lang2EC.text = widget.oldValues.languageTwo;
+      _wordOneEC.text = widget.oldValues.wordOne;
+      _wordTwoEC.text = widget.oldValues.wordTwo;
     });
   }
 
   _handleChanged() {
     setState(() {
-      status = ModifyWordgroupRow.uncommitedChanges;
+      status = ModifyWordpairRow.uncommitedChanges;
       widget.notifyStatusChange(
-          widget.wordgroupId, ModifyWordgroupRow.uncommitedChanges);
+          widget.wordpairId, ModifyWordpairRow.uncommitedChanges);
     });
   }
 
   _handleCommit() {
     setState(() {
       if (true) {
-        status = ModifyWordgroupRow.commited;
+        status = ModifyWordpairRow.commited;
         widget.notifyStatusChange(
-            widget.wordgroupId, ModifyWordgroupRow.commited);
+            widget.wordpairId, ModifyWordpairRow.commited);
 
-        newValues = Wordgroup(
-            id: widget.wordgroupId,
-            name: _nameEC.text,
-            languageOne: _lang1EC.text,
-            languageTwo: _lang2EC.text,
-            dateCreated: DateTime.now().toIso8601String());
+        newValues = Wordpair(
+            id: widget.wordpairId,
+            wordOne: _wordOneEC.text,
+            wordTwo: _wordTwoEC.text,
+            languageOne: widget.oldValues.languageOne,
+            languageTwo: widget.oldValues.languageTwo);
 
         widget.commitChanges(newValues!);
       }
@@ -85,28 +81,28 @@ class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
 
   _handleDelete() {
     setState(() {
-      status = ModifyWordgroupRow.markedForDelete;
+      status = ModifyWordpairRow.markedForDelete;
       widget.notifyStatusChange(
-          widget.wordgroupId, ModifyWordgroupRow.markedForDelete);
+          widget.wordpairId, ModifyWordpairRow.markedForDelete);
     });
   }
 
   _handleHardCancel() {
     setState(() {
-      status = ModifyWordgroupRow.unchanged;
-      widget.removeFromModified(widget.wordgroupId);
+      status = ModifyWordpairRow.unchanged;
+      widget.removeFromModified(widget.wordpairId);
     });
   }
 
   Color _decideColor() {
     switch (status) {
-      case ModifyWordgroupRow.unchanged:
+      case ModifyWordpairRow.unchanged:
         return Colors.black;
-      case ModifyWordgroupRow.uncommitedChanges:
+      case ModifyWordpairRow.uncommitedChanges:
         return Colors.yellow;
-      case ModifyWordgroupRow.commited:
+      case ModifyWordpairRow.commited:
         return Colors.green;
-      case ModifyWordgroupRow.markedForDelete:
+      case ModifyWordpairRow.markedForDelete:
         return Colors.red;
     }
     return Colors.brown;
@@ -120,25 +116,18 @@ class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
           children: [
             modifyWordgroupRowFutureBuilder(
                 width: 250,
-                controller: _nameEC,
+                controller: _wordOneEC,
                 onEditingComplete: _handleChanged,
                 color: _decideColor(),
                 maxLength: 20,
                 labelText: "Name"),
             modifyWordgroupRowFutureBuilder(
                 width: 100,
-                controller: _lang1EC,
+                controller: _wordTwoEC,
                 onEditingComplete: _handleChanged,
                 color: _decideColor(),
                 maxLength: 3,
                 labelText: "lang 1"),
-            modifyWordgroupRowFutureBuilder(
-                width: 100,
-                controller: _lang2EC,
-                onEditingComplete: _handleChanged,
-                color: _decideColor(),
-                maxLength: 3,
-                labelText: "lang 2"),
           ],
         ),
       ),

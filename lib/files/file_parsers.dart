@@ -28,22 +28,22 @@ class WordpairFileParser {
   }
 }
 
-class WordGroupFileParser {
+class WordgroupFileParser {
   File file;
 
-  WordGroupFileParser(this.file);
+  WordgroupFileParser(this.file);
 
-  Future<List<WordGroup>> parse() async {
+  Future<List<Wordgroup>> parse() async {
     String date = DateTime.now().toIso8601String();
 
     final contents = await file.readAsLines();
     List<String> columns = contents[0].split(',');
 
-    List<WordGroup> ret = [];
+    List<Wordgroup> ret = [];
 
     for (int i = 0; i < columns.length; i++) {
       List<String> entry = contents[i].split(',');
-      ret.add(WordGroup(
+      ret.add(Wordgroup(
         id: int.parse(entry[0]),
         name: entry[1],
         languageOne: entry[2],

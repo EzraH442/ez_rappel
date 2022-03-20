@@ -22,7 +22,7 @@ void pushModifyWordgroups(BuildContext context) {
       MaterialPageRoute<void>(builder: (context) => const ModifyWordgroupPage()));
 }
 
-void pushFlashcards(BuildContext context, Set<WordGroup> wgs) {
+void pushFlashcards(BuildContext context, Set<Wordgroup> wgs) {
   Navigator.of(context).push(
       MaterialPageRoute<void>(builder: (context) => FlashcardPage(selectedWordGroups: wgs)));
 }

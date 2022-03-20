@@ -1,13 +1,13 @@
 import 'package:luples_flutter/words/data/entities/database_entity.dart';
 
-class WordGroup extends DatabaseEntity {
+class Wordgroup extends DatabaseEntity {
   final int id;
   final String name;
   final String languageOne;
   final String languageTwo;
   final String dateCreated;
 
-  const WordGroup({
+  const Wordgroup({
     required this.id,
     required this.name,
     required this.languageOne,
@@ -34,7 +34,7 @@ class WordGroup extends DatabaseEntity {
 
   @override
   bool operator ==(Object other) {
-    if (other is WordGroup) {
+    if (other is Wordgroup) {
       return (other.id == id &&
           other.name == name &&
           other.languageOne == languageOne &&

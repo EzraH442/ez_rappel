@@ -17,22 +17,24 @@ class AddNewWordgroupSection extends StatefulWidget {
 
 class _AddNewWordgroupSectionState extends State<AddNewWordgroupSection> {
   final _groupsToAdd =
-      LinkedHashSet<WordGroup>(equals: (p0, p1) => p0.id == p1.id);
+      LinkedHashSet<Wordgroup>(equals: (p0, p1) => p0.id == p1.id);
   final _rows = LinkedHashSet<AddNewWordgroupRow>(
       equals: (p0, p1) => p1.rowId == p1.rowId);
   int _nextId = 0;
 
-  _putGroup(WordGroup wg) {
+  _putGroup(Wordgroup wg) {
     setState(() {
       _groupsToAdd.add(wg);
     });
   }
 
-  _removeGroup(WordGroup wg) {
+  _removeGroup(int id, Wordgroup? wg) {
     setState(() {
-      _groupsToAdd.remove(wg);
+      if (wg != null) {
+        _groupsToAdd.remove(wg);
+      }
       AddNewWordgroupRow associatedRow =
-          _rows.firstWhere((element) => element.rowId == wg.id);
+          _rows.firstWhere((element) => element.rowId == id);
       _rows.remove(associatedRow);
     });
   }

@@ -20,7 +20,7 @@ class ModifyExistingWordgroupsSection extends StatefulWidget {
 class _ModifyExistingWordgroupsSectionState
     extends State<ModifyExistingWordgroupsSection> {
   final _modifiedIds = <int, int>{};
-  final _modifiedExistingGroups = <int, WordGroup>{};
+  final _modifiedExistingGroups = <int, Wordgroup>{};
 
   _notifyExistingWordgroupStatusChange(int id, int status) {
     setState(() {
@@ -35,13 +35,13 @@ class _ModifyExistingWordgroupsSectionState
     });
   }
 
-  _addToModifiedExistingGroups(WordGroup wg) {
+  _addToModifiedExistingGroups(Wordgroup wg) {
     setState(() {
       _modifiedExistingGroups[wg.id] = wg;
     });
   }
 
-  Column _buildExistingGroupsColumn(List<WordGroup> wgs) {
+  Column _buildExistingGroupsColumn(List<Wordgroup> wgs) {
     return Column(
         children: wgs.map((wg) {
       if (_modifiedIds.containsKey(wg.id)) {
@@ -82,7 +82,7 @@ class _ModifyExistingWordgroupsSectionState
         //delete
       } else if (entry.value == ModifyWordgroupRow.commited) {
         //update entry
-        widget.database.updateWordGroup(_modifiedExistingGroups[entry.key]!);
+        widget.database.updateWordgroup(_modifiedExistingGroups[entry.key]!);
       }
     }
     setState(() {
