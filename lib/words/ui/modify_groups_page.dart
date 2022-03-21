@@ -14,11 +14,14 @@ class _ModifyWordgroupPageState extends State<ModifyWordgroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: const Text("Modify Wordgroups"),
+        ),
         body: Column(
-      children: [
-        ModifyExistingWordgroupsSection(database: _db),
-        AddNewWordgroupSection(database: _db),
-      ],
-    ));
+          children: [
+            ModifyExistingWordgroupsSection(database: _db),
+            AddNewWordgroupSection(database: _db),
+          ],
+        ));
   }
 }

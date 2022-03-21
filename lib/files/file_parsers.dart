@@ -9,12 +9,23 @@ class WordpairFileParser {
 
   Future<List<Wordpair>> parse() async {
     final contents = await file.readAsLines();
-    List<String> columns = contents[0].split(',');
 
     List<Wordpair> ret = [];
 
-    for (int i = 0; i < columns.length; i++) {
+    List<String> columnNames = contents[0].split(',');
+
+    if (!(columnNames[0] == 'id' &&
+        columnNames[1] == "word_one" &&
+        columnNames[2] == "word_two" &&
+        columnNames[3] == "language_one" &&
+        columnNames[4] == "language_two")) {
+      //TODO add error
+      return ret;
+    }
+
+    for (int i = 1; i < contents.length; i++) {
       List<String> entry = contents[i].split(',');
+      print(entry);
       ret.add(Wordpair(
           id: int.parse(entry[0]),
           wordOne: entry[1],

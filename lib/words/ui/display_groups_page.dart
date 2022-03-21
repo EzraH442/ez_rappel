@@ -78,6 +78,7 @@ class _PracticePageState extends State<PracticePage> {
 
   Scaffold _displayScaffold(BuildContext context, WordDatabaseHelper db) =>
       Scaffold(
+        appBar: AppBar(title: const Text("Practice Words")),
         body: components.rowFutureBuilder(
             context, db.queryAllWordgroups(), _buildWordgroupColumn),
       );

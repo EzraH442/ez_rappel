@@ -115,12 +115,13 @@ class WordDatabaseHelper<WordPair> {
   }
 
   Future<int> _insertWordpair(Wordpair wp, Database db) {
+    print(_wordPairColumns.toString());
     return db.rawInsert('''
       INSERT INTO $_wordPairTableName(
-        ${_wordPairColumns["word_one"]},
-        ${_wordPairColumns["word_two"]},
-        ${_wordPairColumns["language_one"]},
-        ${_wordPairColumns["language_two"]}
+        ${_wordPairColumns["wordOne"]},
+        ${_wordPairColumns["wordTwo"]},
+        ${_wordPairColumns["languageOne"]},
+        ${_wordPairColumns["languageTwo"]}
       ) 
       VALUES(?, ?, ?, ?);
     ''', [
@@ -188,7 +189,7 @@ class WordDatabaseHelper<WordPair> {
 
   Future<int> _deleteWordgroup(int wgId, Database db) async {
     return db.rawDelete(
-        'DELTE FROM $_wordGroupTableName WHERE ${_wordGroupColumns["id"]} = ?',
+        'DELETE FROM $_wordGroupTableName WHERE ${_wordGroupColumns["id"]} = ?',
         [wgId]);
   }
 

@@ -49,9 +49,13 @@ class _AddNewWordgroupSectionState extends State<AddNewWordgroupSection> {
   }
 
   _executeChanges() {
-    for (AddNewWordgroupRow row in _rows) {
-      // widget.database;
-    }
+    setState(() {
+      for (Wordgroup wg in _groupsToAdd) {
+        widget.database.insertWordgroup(wg);
+      }
+      _rows.clear();
+      _groupsToAdd.clear();
+    });
   }
 
   _resetAllChanges() {

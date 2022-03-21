@@ -19,6 +19,9 @@ class _EditWordpairsOfWordgroupPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Edit wordpairs of wordgroup"),
+      ),
       body: Column(children: [
         Container(
             child: ModifyExistingWordpairsSection(
