@@ -79,7 +79,7 @@ class _ModifyExistingWordgroupsSectionState
       if (entry.value == ModifyWordgroupRow.uncommitedChanges) {
         //send double check message
       } else if (entry.value == ModifyWordgroupRow.markedForDelete) {
-        //widget.database.deleteWordgroup(_modifiedExistingGroups[entry.key]);
+        widget.database.deleteWordgroupById(entry.key);
       } else if (entry.value == ModifyWordgroupRow.commited) {
         widget.database.updateWordgroup(_modifiedExistingGroups[entry.key]!);
       }

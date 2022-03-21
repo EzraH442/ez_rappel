@@ -186,10 +186,16 @@ class WordDatabaseHelper<WordPair> {
     ''');
   }
 
-  Future<int> _delteWord(Wordpair wg, Database db) async {
+  Future<int> _deleteWordgroup(int wgId, Database db) async {
+    return db.rawDelete(
+        'DELTE FROM $_wordGroupTableName WHERE ${_wordGroupColumns["id"]} = ?',
+        [wgId]);
+  }
+
+  Future<int> _deleteWordpair(int wpId, Database db) async {
     return db.rawDelete(
         'DELETE FROM $_wordPairTableName WHERE ${_wordPairColumns["id"]} = ?',
-        [wg.id]);
+        [wpId]);
   }
 
   Future<int> _deleteJunctionEntry(
@@ -201,7 +207,7 @@ class WordDatabaseHelper<WordPair> {
     ''', [wordPairId, wordGroupId]);
   }
 
-  Future<int> insertWord(Wordpair wp) async {
+  Future<int> insertWordpair(Wordpair wp) async {
     return await _insertWordpair(wp, await instance.database);
   }
 
@@ -247,13 +253,26 @@ class WordDatabaseHelper<WordPair> {
     return _updateWordgroup(wg, await instance.database);
   }
 
-  Future<int> deleteWord(Wordpair wg, Database db) async {
-    return _delteWord(wg, await instance.database);
+  Future<int> deleteWordpair(Wordpair wp) async {
+    return _deleteWordpair(wp.id, await instance.database);
+  }
+
+  Future<int> deleteWordpairById(int wpId) async {
+    return _deleteWordpair(wpId, await instance.database);
+  }
+
+  Future<int> deleteWordgroup(Wordgroup wg) async {
+    return _deleteWordgroup(wg.id, await instance.database);
+  }
+
+  Future<int> deleteWordgroupById(int wgId) async {
+    return _deleteWordgroup(wgId, await instance.database);
   }
 
   Future<int> removeWordFromGroupWithIds(int wpId, int wgId) async {
     return _deleteJunctionEntry(wpId, wgId, await instance.database);
   }
+
   Future<int> removeWordFromGroup(Wordpair wp, Wordpair wg) async {
     return _deleteJunctionEntry(wp.id, wg.id, await instance.database);
   }
