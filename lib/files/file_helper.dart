@@ -3,8 +3,12 @@ import 'dart:async';
 
 import 'package:file_picker/file_picker.dart';
 
+import 'package:luples_flutter/database_utils.dart';
+
+import 'file_parsers.dart';
+
 class FileHelper {
-  Future<File?> get _localFileOrNull async {
+  Future<File?> readlocalFileOrNull() async {
     final result = await FilePicker.platform
         .pickFiles(type: FileType.custom, allowedExtensions: ['csv']);
     if (result != null) {
@@ -14,11 +18,8 @@ class FileHelper {
     }
   }
 
-  void readFileAndAddCone(File f) async {
-    try {
-      final contents = await f.readAsLines();
-    } catch (e) {
-      return;
-    }
+  Future<List<Wordpair>?> readWordpairFile(File f) async {
+    final parser = WordpairFileParser(f);
+    return parser.parse();
   }
 }

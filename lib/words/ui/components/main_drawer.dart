@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'routes.dart' as routes;
+import 'package:luples_flutter/words/routes/primary_routes.dart' as routes;
 
 Drawer mainDrawer(context) => Drawer(
         child: ListView(

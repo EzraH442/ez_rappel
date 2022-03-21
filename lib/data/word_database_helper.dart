@@ -1,9 +1,10 @@
-import 'package:luples_flutter/data/entities/word_group.dart';
-import 'package:luples_flutter/data/entities/word_pair.dart';
-import 'package:luples_flutter/data/entities/word_group_word_pair.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+
+import 'word_group.dart';
+import 'word_pair.dart';
+import 'word_group_word_pair.dart';
 
 class WordDatabaseHelper<WordPair> {
   static const _databaseName = "word.db";

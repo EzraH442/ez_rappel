@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:luples_flutter/words/data/entities/word_group.dart';
-import 'package:luples_flutter/words/data/entities/word_pair.dart';
+import 'package:luples_flutter/database_utils.dart';
 
 class WordpairFileParser {
   File file;

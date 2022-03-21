@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:luples_flutter/words/data/entities/word_group.dart';
-import 'package:luples_flutter/words/data/word_database_helper.dart';
+
+import 'package:luples_flutter/database_utils.dart';
 
 class ModifyWordsPage extends StatefulWidget {
   const ModifyWordsPage({Key? key}) : super(key: key);
