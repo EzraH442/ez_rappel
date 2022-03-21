@@ -5,11 +5,9 @@ import 'edit_existing_words_row.dart';
 
 class ModifyExistingWordpairsSection extends StatefulWidget {
   final int associatedWordgroupId;
-  final WordDatabaseHelper database;
   const ModifyExistingWordpairsSection({
     Key? key,
     required this.associatedWordgroupId,
-    required this.database,
   }) : super(key: key);
 
   @override
@@ -19,6 +17,8 @@ class ModifyExistingWordpairsSection extends StatefulWidget {
 
 class _ModifyExistingWordpairsSectionState
     extends State<ModifyExistingWordpairsSection> {
+  final _db = WordDatabaseHelper.instance;
+
   final _modifiedIds = <int, int>{};
   final _modifiedExistingPairs = <int, Wordpair>{};
 
@@ -80,10 +80,10 @@ class _ModifyExistingWordpairsSectionState
       if (entry.value == ModifyWordpairRow.uncommitedChanges) {
         //send double check message
       } else if (entry.value == ModifyWordpairRow.markedForDelete) {
-        widget.database.removeWordFromGroupWithIds(
+        _db.removeWordFromGroupWithIds(
             entry.key, widget.associatedWordgroupId);
       } else if (entry.value == ModifyWordpairRow.commited) {
-        widget.database.updateWordpair(_modifiedExistingPairs[entry.key]!);
+        _db.updateWordpair(_modifiedExistingPairs[entry.key]!);
       }
     }
     setState(() {
@@ -105,7 +105,7 @@ class _ModifyExistingWordpairsSectionState
       children: [
         rowFutureBuilder<Wordpair>(
             context,
-            widget.database.getWordsFromGroup(widget.associatedWordgroupId),
+            _db.getWordsFromGroup(widget.associatedWordgroupId),
             _buildExistingPairsColumn),
         _buildMainButtons(),
       ],

@@ -7,20 +7,20 @@ import 'package:ez_rappel/file_utils.dart';
 
 import 'import_wordpair_file.dart';
 
-class ImportWordpairsToWordgroupPage extends StatefulWidget {
-  final Wordgroup associatedWordgroup;
+class ImportWordpairsToWordgroupSection extends StatefulWidget {
+  final int associatedWordgroupId;
 
-  const ImportWordpairsToWordgroupPage(
-      {Key? key, required this.associatedWordgroup})
+  const ImportWordpairsToWordgroupSection(
+      {Key? key, required this.associatedWordgroupId})
       : super(key: key);
 
   @override
-  State<ImportWordpairsToWordgroupPage> createState() =>
-      _ImportWordpairsToWordgroupPageState();
+  State<ImportWordpairsToWordgroupSection> createState() =>
+      _ImportWordpairsToWordgroupSectionState();
 }
 
-class _ImportWordpairsToWordgroupPageState
-    extends State<ImportWordpairsToWordgroupPage> {
+class _ImportWordpairsToWordgroupSectionState
+    extends State<ImportWordpairsToWordgroupSection> {
   final _fileHelper = FileHelper();
   final _db = WordDatabaseHelper.instance;
 
@@ -50,12 +50,12 @@ class _ImportWordpairsToWordgroupPageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
+    return Container(
+        child: Column(
       children: [
         _hasSelectedFile
             ? ImportWordpairsSection(
-                associatedWordgroupId: widget.associatedWordgroup.id,
+                associatedWordgroupId: widget.associatedWordgroupId,
                 wordPairs: wordPairs!)
             : const Text("..."),
         _buildButtonRow()

@@ -13,7 +13,7 @@ class WordDatabaseHelper<WordPair> {
   static const _wordGroupTableName = "word_group_table";
   static const _junctionTableName = "word_group_word_pair_table";
   static const _wordPairColumns = Wordpair.columnNameMap;
-  static const _wordGroupColumns = Wordpair.columnNameMap;
+  static const _wordGroupColumns = Wordgroup.columnNameMap;
   static const _junctionColumns = WordGroupWordPair.columnNameMap;
 
   static Database? _database;

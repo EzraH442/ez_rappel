@@ -1,3 +1,4 @@
+import 'package:ez_rappel/words/ui/components/modify_words_of_group_page/edit_wordpairs_of_wordgroup.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ez_rappel/database_utils.dart';
@@ -25,4 +26,9 @@ void pushModifyWordgroups(BuildContext context) {
 void pushFlashcards(BuildContext context, Set<Wordgroup> wgs) {
   Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (context) => FlashcardPage(selectedWordGroups: wgs)));
+}
+
+void pushModifyWordpairsOfGroup(BuildContext context, int wgId) {
+  Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => EditWordpairsOfWordgroupPage(wordgroupId: wgId)));
 }
