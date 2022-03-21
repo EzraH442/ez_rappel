@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "luples_flutter" "\0"
+            VALUE "CompanyName", "com.ezrahuang.ezrappel" "\0"
+            VALUE "FileDescription", "ez_rappel" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "luples_flutter" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "luples_flutter.exe" "\0"
-            VALUE "ProductName", "luples_flutter" "\0"
+            VALUE "InternalName", "ez_rappel" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 com.ezrahuang.ezrappel. All rights reserved." "\0"
+            VALUE "OriginalFilename", "ez_rappel.exe" "\0"
+            VALUE "ProductName", "ez_rappel" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

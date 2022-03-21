@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:luples_flutter/database_utils.dart';
-import 'package:luples_flutter/page_components.dart';
+import 'package:ez_rappel/database_utils.dart';
+import 'package:ez_rappel/page_components.dart';
 
 class ModifyWordgroupPage extends StatefulWidget {
   const ModifyWordgroupPage({Key? key}) : super(key: key);

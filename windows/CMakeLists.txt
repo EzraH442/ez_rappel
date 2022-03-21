@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(luples_flutter LANGUAGES CXX)
+project(ez_rappel LANGUAGES CXX)
 
-set(BINARY_NAME "luples_flutter")
+set(BINARY_NAME "ez_rappel")
 
 cmake_policy(SET CMP0063 NEW)
 

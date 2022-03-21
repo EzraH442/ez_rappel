@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.luples_flutter">
+    package="com.ezrahuang.ezrappel.ez_rappel">
    <application
-        android:label="luples_flutter"
+        android:label="ez_rappel"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:luples_flutter/database_utils.dart';
+import 'package:ez_rappel/database_utils.dart';
 
 class FlashcardPage extends StatefulWidget {
   final Set<Wordgroup> selectedWordGroups;

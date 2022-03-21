@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:luples_flutter/database_utils.dart';
-import 'package:luples_flutter/words/ui/components/display_wordgroups.dart';
+import 'package:ez_rappel/database_utils.dart';
+import 'package:ez_rappel/words/ui/components/display_wordgroups.dart';
 
 class AddNewWordgroupRow extends StatefulWidget {
   static const empty = 0;

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'dart:io';
 
-import 'package:luples_flutter/database_utils.dart';
-import 'package:luples_flutter/file_utils.dart';
+import 'package:ez_rappel/database_utils.dart';
+import 'package:ez_rappel/file_utils.dart';
 
 import 'import_wordpair_file.dart';
 

@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "luples_flutter")
-set(APPLICATION_ID "com.example.luples_flutter")
+set(BINARY_NAME "ez_rappel")
+set(APPLICATION_ID "com.ezrahuang.ezrappel.ez_rappel")
 
 cmake_policy(SET CMP0063 NEW)
 

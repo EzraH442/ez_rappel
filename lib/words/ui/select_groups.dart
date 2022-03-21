@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:luples_flutter/database_utils.dart';
+import 'package:ez_rappel/database_utils.dart';
 
 class ModifyWordsPage extends StatefulWidget {
   const ModifyWordsPage({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
         languageOne: "eng",
         languageTwo: "fre",
         dateCreated: "today!");
-  
+
     int id = await db.insertWordgroup(test);
   }
 }
