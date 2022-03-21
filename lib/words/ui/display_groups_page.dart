@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:luples_flutter/words/data/word_database_helper.dart';
-import 'package:luples_flutter/words/data/entities/word_group.dart';
+import 'package:luples_flutter/data/word_database_helper.dart';
+import 'package:luples_flutter/data/entities/word_group.dart';
 import 'package:luples_flutter/words/ui/components/routes.dart' as routes;
 
 import 'package:luples_flutter/words/ui/components/display_wordgroups.dart'

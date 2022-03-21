@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luples_flutter/words/data/entities/word_group.dart';
+import 'package:luples_flutter/data/entities/word_group.dart';
 import 'package:luples_flutter/words/ui/components/display_wordgroups.dart';
 
 class ModifyWordgroupRow extends StatefulWidget {

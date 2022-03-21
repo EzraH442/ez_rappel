@@ -1,4 +1,4 @@
-import 'package:luples_flutter/words/data/entities/database_entity.dart';
+import 'package:luples_flutter/data/entities/database_entity.dart';
 
 class WordGroupWordPair extends DatabaseEntity {
   final int wordGroupId;

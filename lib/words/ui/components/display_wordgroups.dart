@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:luples_flutter/words/data/entities/word_group.dart';
-import 'package:luples_flutter/words/data/entities/word_pair.dart';
-import 'package:luples_flutter/words/data/word_database_helper.dart';
+import 'package:luples_flutter/data/entities/word_group.dart';
+import 'package:luples_flutter/data/entities/word_pair.dart';
+import 'package:luples_flutter/data/word_database_helper.dart';
 
 wordgroupRowFutureBuilder(BuildContext ctx, WordDatabaseHelper db,
     Widget Function(List<Wordgroup>) buildColumn) {
