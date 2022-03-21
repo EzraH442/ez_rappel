@@ -80,7 +80,8 @@ class _ModifyExistingWordpairsSectionState
       if (entry.value == ModifyWordpairRow.uncommitedChanges) {
         //send double check message
       } else if (entry.value == ModifyWordpairRow.markedForDelete) {
-        widget.database.removeWordFromGroupWithIds(entry.key, widget.associatedWordgroupId);
+        widget.database.removeWordFromGroupWithIds(
+            entry.key, widget.associatedWordgroupId);
       } else if (entry.value == ModifyWordpairRow.commited) {
         widget.database.updateWordpair(_modifiedExistingPairs[entry.key]!);
       }

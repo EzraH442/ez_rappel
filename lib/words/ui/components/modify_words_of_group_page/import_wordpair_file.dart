@@ -8,7 +8,8 @@ class ImportWordpairsSection extends StatefulWidget {
   final int associatedWordgroupId;
   final List<Wordpair> wordPairs;
 
-  const ImportWordpairsSection({Key? key, required this.associatedWordgroupId, required this.wordPairs})
+  const ImportWordpairsSection(
+      {Key? key, required this.associatedWordgroupId, required this.wordPairs})
       : super(key: key);
 
   @override
@@ -24,8 +25,6 @@ class _ImportWordpairsSectionState extends State<ImportWordpairsSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: _buildColumn(widget.wordPairs)
-      );
+    return Container(child: _buildColumn(widget.wordPairs));
   }
 }
