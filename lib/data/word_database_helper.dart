@@ -150,6 +150,7 @@ class WordDatabaseHelper<WordPair> {
   }
 
   Future<int> _addWordpairToGroup(int wordPairId, int groupID, Database db) {
+    print("${_wordPairColumns["id"]}");
     return db.rawInsert('''
       INSERT INTO $_junctionTableName(
         ${_junctionColumns["wordPairId"]},

@@ -11,13 +11,13 @@ class WordGroupWordPair extends DatabaseEntity {
 
   static const Map<String, String> columnNameMap = {
     "id": "id",
-    "wordGroupId": "word_group_id",
     "wordPairId": "word_pair_id",
+    "wordGroupId": "word_group_id",
   };
 
   @override
   Map<String, dynamic> toMap() => {
-        'groupId': wordGroupId,
         'wordPairId': wordPairId,
+        'groupId': wordGroupId,
       };
 }
