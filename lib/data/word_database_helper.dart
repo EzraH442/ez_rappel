@@ -70,7 +70,12 @@ class WordDatabaseHelper<WordPair> {
     Database db = await instance.database;
 
     String query = '''
-      SELECT ${_wordPairColumns["wordOne"]}, ${_wordPairColumns["wordTwo"]} 
+      SELECT 
+        $_wordPairTableName.${_wordPairColumns["id"]},
+        ${_wordPairColumns["wordOne"]}, 
+        ${_wordPairColumns["wordTwo"]},
+        $_wordPairTableName.${_wordPairColumns["languageOne"]}, 
+        $_wordPairTableName.${_wordPairColumns["languageTwo"]}
         FROM $_wordPairTableName
       JOIN $_junctionTableName 
         ON $_wordPairTableName.${_wordPairColumns["id"]} = ${_junctionColumns["wordPairId"]}
@@ -81,6 +86,7 @@ class WordDatabaseHelper<WordPair> {
     ''';
 
     final List<Map<String, dynamic>> maps = await db.rawQuery(query);
+    print(maps.toString());
     return List.generate(
         maps.length,
         (i) => Wordpair(

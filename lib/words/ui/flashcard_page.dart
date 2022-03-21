@@ -45,10 +45,10 @@ List<Wordpair> _parseDbresult(List<dynamic> res) {
   for (dynamic wp in res) {
     ret.add(Wordpair(
         id: wp.id,
-        wordOne: wp.word_one,
-        wordTwo: wp.word_two,
-        languageOne: wp.language_one,
-        languageTwo: wp.language_two));
+        wordOne: wp.wordOne,
+        wordTwo: wp.wordTwo,
+        languageOne: wp.languageOne,
+        languageTwo: wp.languageTwo));
   }
 
   return ret;
