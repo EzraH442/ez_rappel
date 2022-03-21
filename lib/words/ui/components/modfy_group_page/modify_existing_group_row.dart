@@ -116,32 +116,12 @@ class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
   Widget build(BuildContext context) {
     return Row(children: [
       Container(
-        child: Row(
-          children: [
-            modifyWordgroupRowFutureBuilder(
-                width: 250,
-                controller: _nameEC,
-                onEditingComplete: _handleChanged,
-                color: _decideColor(),
-                maxLength: 20,
-                labelText: "Name"),
-            modifyWordgroupRowFutureBuilder(
-                width: 100,
-                controller: _lang1EC,
-                onEditingComplete: _handleChanged,
-                color: _decideColor(),
-                maxLength: 3,
-                labelText: "lang 1"),
-            modifyWordgroupRowFutureBuilder(
-                width: 100,
-                controller: _lang2EC,
-                onEditingComplete: _handleChanged,
-                color: _decideColor(),
-                maxLength: 3,
-                labelText: "lang 2"),
-          ],
-        ),
-      ),
+          child: wordgroupEditingRow(
+              nameController: _nameEC,
+              languageOneController: _lang1EC,
+              languageTwoController: _lang2EC,
+              handleChange: _handleChanged,
+              textColor: _decideColor())),
       Expanded(
           child: Row(
         children: [

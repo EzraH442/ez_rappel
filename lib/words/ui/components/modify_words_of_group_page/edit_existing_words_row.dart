@@ -114,20 +114,16 @@ class _ModifyWordpairRowState extends State<ModifyWordpairRow> {
       Container(
         child: Row(
           children: [
-            modifyWordgroupRowFutureBuilder(
-                width: 250,
+            wordpairRowTextfield(
                 controller: _wordOneEC,
                 onEditingComplete: _handleChanged,
-                color: _decideColor(),
-                maxLength: 20,
-                labelText: "Name"),
-            modifyWordgroupRowFutureBuilder(
-                width: 100,
+                textColor: _decideColor(),
+                labelText: "word one"),
+            wordpairRowTextfield(
                 controller: _wordTwoEC,
                 onEditingComplete: _handleChanged,
-                color: _decideColor(),
-                maxLength: 3,
-                labelText: "lang 1"),
+                textColor: _decideColor(),
+                labelText: "word two"),
           ],
         ),
       ),

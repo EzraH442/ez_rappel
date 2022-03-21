@@ -78,8 +78,9 @@ class _PracticePageState extends State<PracticePage> {
 
   Scaffold _displayScaffold(BuildContext context, WordDatabaseHelper db) =>
       Scaffold(
-          body: components.wordgroupRowFutureBuilder(
-              context, db, _buildWordgroupColumn));
+        body: components.rowFutureBuilder(
+            context, db.queryAllWordgroups(), _buildWordgroupColumn),
+      );
 
   @override
   Widget build(BuildContext context) => _displayScaffold(context, _db);

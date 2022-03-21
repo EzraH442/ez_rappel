@@ -79,9 +79,8 @@ class _ModifyExistingWordgroupsSectionState
       if (entry.value == ModifyWordgroupRow.uncommitedChanges) {
         //send double check message
       } else if (entry.value == ModifyWordgroupRow.markedForDelete) {
-        //delete
+        //widget.database.deleteWordgroup(_modifiedExistingGroups[entry.key]);
       } else if (entry.value == ModifyWordgroupRow.commited) {
-        //update entry
         widget.database.updateWordgroup(_modifiedExistingGroups[entry.key]!);
       }
     }
@@ -102,8 +101,8 @@ class _ModifyExistingWordgroupsSectionState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        wordgroupRowFutureBuilder(
-            context, widget.database, _buildExistingGroupsColumn),
+        rowFutureBuilder<Wordgroup>(context,
+            widget.database.queryAllWordgroups(), _buildExistingGroupsColumn),
         _buildMainButtons(),
       ],
     );

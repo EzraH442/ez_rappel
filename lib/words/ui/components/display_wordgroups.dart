@@ -1,41 +1,23 @@
 import 'package:flutter/material.dart';
 
-import 'package:luples_flutter/database_utils.dart';
-
-wordgroupRowFutureBuilder(BuildContext ctx, WordDatabaseHelper db,
-    Widget Function(List<Wordgroup>) buildColumn) {
+rowFutureBuilder<T>(BuildContext context, Future<List<dynamic>> future,
+    Widget Function(List<T>) buildColumn) {
   return FutureBuilder<List>(
-    future: db.queryAllWordgroups(),
-    builder: (context, snapshot) {
-      return snapshot.hasData
-          ? buildColumn(snapshot.data!.cast<Wordgroup>())
+      future: future,
+      builder: (context, snapshot) => snapshot.hasData
+          ? buildColumn(snapshot.data!.cast<T>())
           : const Center(
               child: CircularProgressIndicator(),
-            );
-    },
-  );
+            ));
 }
 
-wordpairRowFutureBuilder(BuildContext ctx, WordDatabaseHelper db,
-    Widget Function(List<Wordpair>) buildColumn) {
-  return FutureBuilder<List>(
-      future: db.queryAllWordgroups(),
-      builder: (context, snapshot) {
-        return snapshot.hasData
-            ? buildColumn(snapshot.data!.cast<Wordpair>())
-            : const Center(
-                child: CircularProgressIndicator(),
-              );
-      });
-}
-
-modifyWordgroupRowFutureBuilder({
+Container _styledTextField({
   required double width,
   required TextEditingController controller,
-  required Color color,
-  int? maxLength,
-  String? labelText,
-  void Function()? onEditingComplete,
+  required int maxLength,
+  required String labelText,
+  required Color textColor,
+  required void Function() onEditingComplete,
 }) {
   return Container(
     width: width,
@@ -43,7 +25,7 @@ modifyWordgroupRowFutureBuilder({
     child: TextField(
       controller: controller,
       maxLength: maxLength,
-      style: TextStyle(color: color),
+      style: TextStyle(color: textColor),
       decoration: InputDecoration(
         labelText: labelText,
       ),
@@ -52,24 +34,68 @@ modifyWordgroupRowFutureBuilder({
   );
 }
 
-modifyWordpairRowTextfield({
+Container _wordgroupRowTextField({
+  required double width,
   required TextEditingController controller,
-  required Color color,
-  String? labelText,
-  void Function()? onEditingComplete,
+  required int maxLength,
+  required String labelText,
+  required Color textColor,
+  required void Function() onEditingComplete,
 }) {
-  return Container(
-    width: 100,
-    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-    child: TextField(
+  return _styledTextField(
+      width: width,
+      controller: controller,
+      maxLength: maxLength,
+      labelText: labelText,
+      textColor: textColor,
+      onEditingComplete: onEditingComplete);
+}
+
+Container wordpairRowTextfield({
+  required TextEditingController controller,
+  required Color textColor,
+  required String labelText,
+  required void Function() onEditingComplete,
+}) {
+  return _styledTextField(
+      width: 100,
       controller: controller,
       maxLength: 50,
-      style: TextStyle(color: color),
-      decoration: InputDecoration(
-        labelText: labelText,
-      ),
-      onEditingComplete: onEditingComplete,
-    ),
+      labelText: labelText,
+      textColor: textColor,
+      onEditingComplete: onEditingComplete);
+}
+
+Row wordgroupEditingRow(
+    {required TextEditingController nameController,
+    required TextEditingController languageOneController,
+    required TextEditingController languageTwoController,
+    required void Function() handleChange,
+    required Color textColor}) {
+  return Row(
+    children: [
+      _wordgroupRowTextField(
+          width: 250,
+          controller: nameController,
+          onEditingComplete: handleChange,
+          textColor: textColor,
+          maxLength: 20,
+          labelText: "Name"),
+      _wordgroupRowTextField(
+          width: 100,
+          controller: languageOneController,
+          onEditingComplete: handleChange,
+          textColor: textColor,
+          maxLength: 3,
+          labelText: "lang 1"),
+      _wordgroupRowTextField(
+          width: 100,
+          controller: languageTwoController,
+          onEditingComplete: handleChange,
+          textColor: textColor,
+          maxLength: 3,
+          labelText: "lang 2"),
+    ],
   );
 }
 

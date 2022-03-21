@@ -103,8 +103,10 @@ class _ModifyExistingWordpairsSectionState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        wordpairRowFutureBuilder(
-            context, widget.database, _buildExistingPairsColumn),
+        rowFutureBuilder<Wordpair>(
+            context,
+            widget.database.getWordsFromGroup(widget.associatedWordgroupId),
+            _buildExistingPairsColumn),
         _buildMainButtons(),
       ],
     );
