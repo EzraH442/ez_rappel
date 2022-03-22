@@ -10,8 +10,12 @@ import 'import_wordpair_file.dart';
 class ImportWordpairsToWordgroupSection extends StatefulWidget {
   final int associatedWordgroupId;
 
+  final void Function() notifyWordsAdded;
+
   const ImportWordpairsToWordgroupSection(
-      {Key? key, required this.associatedWordgroupId})
+      {Key? key,
+      required this.associatedWordgroupId,
+      required this.notifyWordsAdded})
       : super(key: key);
 
   @override
@@ -44,14 +48,16 @@ class _ImportWordpairsToWordgroupSectionState
   void _addWordsToGroup() async {
     if (_idsProvided) {
       if (_keepExistingWordpairs) {
-
-      } else {
-        
-      }
+      } else {}
     } else {
       List<int> insertedIds = await _db.insertAllWordpairs(wordPairs!);
       _db.addAllWordpairsToGroup(insertedIds, widget.associatedWordgroupId);
     }
+    setState(() {
+      wordPairs = null;
+      _hasSelectedFile = false;
+    });
+    widget.notifyWordsAdded();
   }
 
   void _onIdCheckboxChanged(bool? checked) {
@@ -66,24 +72,35 @@ class _ImportWordpairsToWordgroupSectionState
     });
   }
 
+  void _onCancel() {
+    setState(() {
+      bool _idsProvided = false;
+      bool _keepExistingWordpairs = false;
+      bool _hasSelectedFile = false;
+      wordPairs = null;
+    });
+  }
+
   Row _buildButtonRow() {
     return Row(
       children: [
-        TextButton(
-            onPressed: _initiateFileSelect, child: const Text("Select A File")),
-        TextButton(onPressed: _addWordsToGroup, child: const Text("confirm!")),
-        Row(children: [
-          const Text("IDs provided?"),
-          Checkbox(value: _idsProvided, onChanged: _onIdCheckboxChanged),
-        ]),
-        _idsProvided
+        _hasSelectedFile
             ? Row(children: [
-                const Text("Ignore existing IDs ?"),
-                Checkbox(
-                    value: _keepExistingWordpairs,
-                    onChanged: _onKeepExistingCheckboxChanged),
+                TextButton(onPressed: _onCancel, child: const Text("Cancel")),
+                const Text("IDs provided?"),
+                Checkbox(value: _idsProvided, onChanged: _onIdCheckboxChanged),
+                _idsProvided
+                    ? Row(children: [
+                        const Text("Ignore existing IDs ?"),
+                        Checkbox(
+                            value: _keepExistingWordpairs,
+                            onChanged: _onKeepExistingCheckboxChanged),
+                      ])
+                    : Row()
               ])
-            : Row(),
+            : TextButton(
+                onPressed: _initiateFileSelect,
+                child: const Text("Import a CSV file")),
       ],
     );
   }
@@ -93,10 +110,10 @@ class _ImportWordpairsToWordgroupSectionState
     return ListView(
       children: [
         _hasSelectedFile
-            ? ImportWordpairsSection(
+            ? ImportedWordpairsSection(
                 associatedWordgroupId: widget.associatedWordgroupId,
                 wordPairs: wordPairs!)
-            : const Text("..."),
+            : const Text("No file selected"),
         _buildButtonRow()
       ],
     );

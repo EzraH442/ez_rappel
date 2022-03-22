@@ -11,10 +11,11 @@ class ImportedWordpairRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(wordpair.wordOne),
-        Text(wordpair.wordTwo),
-        Text(wordpair.languageOne),
-        Text(wordpair.languageTwo),
+        SizedBox(width: 30, child: Text(wordpair.id.toString())),
+        SizedBox(width: 150, child: Text(wordpair.wordOne)),
+        SizedBox(width: 150, child: Text(wordpair.wordTwo)),
+        SizedBox(width: 30, child: Text(wordpair.languageOne)),
+        SizedBox(width: 30, child: Text(wordpair.languageTwo)),
       ],
     );
   }

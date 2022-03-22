@@ -16,6 +16,10 @@ class EditWordpairsOfWordgroupPage extends StatefulWidget {
 
 class _EditWordpairsOfWordgroupPageState
     extends State<EditWordpairsOfWordgroupPage> {
+  void _notifyChange() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,15 +28,12 @@ class _EditWordpairsOfWordgroupPageState
         ),
         body: Column(
           children: [
-            Container(
-              height: 500,
-              child: ModifyExistingWordpairsSection(
-                  associatedWordgroupId: widget.wordgroupId),
-            ),
-            Container(
-              height: 300,
+            ModifyExistingWordpairsSection(
+                associatedWordgroupId: widget.wordgroupId),
+            Expanded(
               child: ImportWordpairsToWordgroupSection(
-                  associatedWordgroupId: widget.wordgroupId),
+                  associatedWordgroupId: widget.wordgroupId,
+                  notifyWordsAdded: _notifyChange),
             )
           ],
         ));
