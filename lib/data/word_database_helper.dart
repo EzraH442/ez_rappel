@@ -37,7 +37,7 @@ class WordDatabaseHelper<WordPair> {
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
          CREATE TABLE $_wordPairTableName (
-           ${_wordPairColumns["id"]}           INTEGER PRIMARY KEY AUTOINCREMENT,
+           ${_wordPairColumns["id"]}           INTEGER PRIMARY KEY,
            ${_wordPairColumns["wordOne"]}      TEXT,
            ${_wordPairColumns["wordTwo"]}      TEXT,
            ${_wordPairColumns["languageOne"]}  TEXT,
@@ -46,7 +46,7 @@ class WordDatabaseHelper<WordPair> {
          ''');
     await db.execute('''
          CREATE TABLE $_wordGroupTableName (
-           ${_wordGroupColumns["id"]}            INTEGER PRIMARY KEY AUTOINCREMENT,
+           ${_wordGroupColumns["id"]}            INTEGER PRIMARY KEY,
            ${_wordGroupColumns["name"]}          TEXT,
            ${_wordGroupColumns["languageOne"]}   TEXT,
            ${_wordGroupColumns["languageTwo"]}   TEXT,
@@ -55,7 +55,7 @@ class WordDatabaseHelper<WordPair> {
          ''');
     await db.execute('''
          CREATE TABLE $_junctionTableName (
-           ${_junctionColumns["id"]}                                     INTEGER PRIMARY KEY AUTOINCREMENT,
+           ${_junctionColumns["id"]}                                     INTEGER PRIMARY KEY,
            ${_junctionColumns["wordPairId"]}                             INTEGER,
            ${_junctionColumns["wordGroupId"]}                            INTEGER,
            FOREIGN KEY(${_junctionColumns["wordPairId"]}) 

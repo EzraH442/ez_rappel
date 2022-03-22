@@ -10,7 +10,7 @@ class WordGroupWordPair extends DatabaseEntity {
   });
 
   static const Map<String, String> columnNameMap = {
-    "id": "id",
+    "id": "rowid",
     "wordPairId": "word_pair_id",
     "wordGroupId": "word_group_id",
   };
