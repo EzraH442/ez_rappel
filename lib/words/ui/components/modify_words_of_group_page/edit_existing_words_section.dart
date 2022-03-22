@@ -1,3 +1,4 @@
+import 'package:ez_rappel/words/ui/components/modfy_group_page/modify_existing_group_row.dart';
 import 'package:flutter/material.dart';
 import 'package:ez_rappel/database_utils.dart';
 import 'package:ez_rappel/words/ui/components/display_wordgroups.dart';
@@ -42,30 +43,34 @@ class _ModifyExistingWordpairsSectionState
   }
 
   Widget _buildExistingPairsColumn(List<Wordpair> wps) {
-    return Column(
-        children: wps.map((wp) {
-      if (_modifiedIds.containsKey(wp.id)) {
-        return ModifyWordpairRow(
-          wordpairId: wp.id,
-          oldValues: wp,
-          notifyStatusChange: _notifyExistingWordpairStatusChange,
-          removeFromModified: _removeFromExisitingWordpairsModified,
-          commitChanges: _addToModifiedExistingPairs,
-        );
-      } else {
-        return ListTile(
-            leading: Container(
-                child: Row(children: [Text(wp.wordOne), Text(wp.wordTwo)])),
-            trailing: IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () {
-                setState(() {
-                  _modifiedIds[wp.id] = ModifyWordpairRow.unchanged;
-                });
-              },
-            ));
-      }
-    }).toList());
+    return Container(
+      child: ListView(
+          padding: const EdgeInsets.all(8),
+          children: wps
+              .map((wp) => _modifiedIds.containsKey(wp.id)
+                  ? ModifyWordpairRow(
+                      wordpairId: wp.id,
+                      oldValues: wp,
+                      notifyStatusChange: _notifyExistingWordpairStatusChange,
+                      removeFromModified: _removeFromExisitingWordpairsModified,
+                      commitChanges: _addToModifiedExistingPairs,
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                          Row(children: [
+                            Container(width: 150, child: Text(wp.wordOne)),
+                            Container(width: 150, child: Text(wp.wordTwo)),
+                          ]),
+                          IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () =>
+                                  _notifyExistingWordpairStatusChange(
+                                      wp.id, ModifyWordpairRow.unchanged)),
+                        ]))
+              .toList()),
+      height: 300,
+    );
   }
 
   Row _buildMainButtons() {
@@ -80,8 +85,7 @@ class _ModifyExistingWordpairsSectionState
       if (entry.value == ModifyWordpairRow.uncommitedChanges) {
         //send double check message
       } else if (entry.value == ModifyWordpairRow.markedForDelete) {
-        _db.removeWordFromGroupWithIds(
-            entry.key, widget.associatedWordgroupId);
+        _db.removeWordFromGroupWithIds(entry.key, widget.associatedWordgroupId);
       } else if (entry.value == ModifyWordpairRow.commited) {
         _db.updateWordpair(_modifiedExistingPairs[entry.key]!);
       }

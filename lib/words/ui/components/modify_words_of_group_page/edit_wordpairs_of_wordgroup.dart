@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'edit_existing_words_section.dart';
-import 'import_wordpair_page.dart';
+import 'import_wordpair_section.dart';
 
 class EditWordpairsOfWordgroupPage extends StatefulWidget {
   final int wordgroupId;
@@ -19,16 +19,22 @@ class _EditWordpairsOfWordgroupPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Edit wordpairs of wordgroup"),
-      ),
-      body: Column(children: [
-        Container(
-            child: ModifyExistingWordpairsSection(
-                associatedWordgroupId: widget.wordgroupId)),
-        ImportWordpairsToWordgroupSection(
-            associatedWordgroupId: widget.wordgroupId),
-      ]),
-    );
+        appBar: AppBar(
+          title: const Text("Edit wordpairs of wordgroup"),
+        ),
+        body: Column(
+          children: [
+            Container(
+              height: 500,
+              child: ModifyExistingWordpairsSection(
+                  associatedWordgroupId: widget.wordgroupId),
+            ),
+            Container(
+              height: 300,
+              child: ImportWordpairsToWordgroupSection(
+                  associatedWordgroupId: widget.wordgroupId),
+            )
+          ],
+        ));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-rowFutureBuilder<T>(BuildContext context, Future<List<dynamic>> future,
+Widget rowFutureBuilder<T>(BuildContext context, Future<List<dynamic>> future,
     Widget Function(List<T>) buildColumn) {
   return FutureBuilder<List>(
       future: future,
@@ -58,7 +58,7 @@ Container wordpairRowTextfield({
   required void Function() onEditingComplete,
 }) {
   return _styledTextField(
-      width: 100,
+      width: 150,
       controller: controller,
       maxLength: 50,
       labelText: labelText,

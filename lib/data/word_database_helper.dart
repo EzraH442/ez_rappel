@@ -86,7 +86,6 @@ class WordDatabaseHelper<WordPair> {
     ''';
 
     final List<Map<String, dynamic>> maps = await db.rawQuery(query);
-    print(maps.toString());
     return List.generate(
         maps.length,
         (i) => Wordpair(
@@ -121,7 +120,6 @@ class WordDatabaseHelper<WordPair> {
   }
 
   Future<int> _insertWordpair(Wordpair wp, Database db) {
-    print(_wordPairColumns.toString());
     return db.rawInsert('''
       INSERT INTO $_wordPairTableName(
         ${_wordPairColumns["wordOne"]},
@@ -156,7 +154,6 @@ class WordDatabaseHelper<WordPair> {
   }
 
   Future<int> _addWordpairToGroup(int wordPairId, int groupID, Database db) {
-    print("${_wordPairColumns["id"]}");
     return db.rawInsert('''
       INSERT INTO $_junctionTableName(
         ${_junctionColumns["wordPairId"]},

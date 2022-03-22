@@ -112,6 +112,7 @@ class _ModifyWordpairRowState extends State<ModifyWordpairRow> {
   Widget build(BuildContext context) {
     return Row(children: [
       Container(
+        width: 300,
         child: Row(
           children: [
             wordpairRowTextfield(

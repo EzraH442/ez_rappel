@@ -54,15 +54,13 @@ class _ModifyExistingWordgroupsSectionState
         );
       } else {
         return ListTile(
-            leading: Text(wg.name),
-            trailing: IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () {
-                setState(() {
-                  _modifiedIds[wg.id] = ModifyWordgroupRow.unchanged;
-                });
-              },
-            ));
+          leading: Text(wg.name),
+          trailing: IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () => _notifyExistingWordgroupStatusChange(
+                wg.id, ModifyWordgroupRow.unchanged),
+          ),
+        );
       }
     }).toList());
   }

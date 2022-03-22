@@ -69,18 +69,16 @@ class _ImportWordpairsToWordgroupSectionState
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: 500,
-        child: ListView(
-          children: [
-            _hasSelectedFile
-                ? ImportWordpairsSection(
-                    associatedWordgroupId: widget.associatedWordgroupId,
-                    wordPairs: wordPairs!)
-                : const Text("..."),
-            _buildButtonRow()
-          ],
-        ));
+  ListView build(BuildContext context) {
+    return ListView(
+      children: [
+        _hasSelectedFile
+            ? ImportWordpairsSection(
+                associatedWordgroupId: widget.associatedWordgroupId,
+                wordPairs: wordPairs!)
+            : const Text("..."),
+        _buildButtonRow()
+      ],
+    );
   }
 }

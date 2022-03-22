@@ -25,7 +25,6 @@ class WordpairFileParser {
 
     for (int i = 1; i < contents.length; i++) {
       List<String> entry = contents[i].split(',');
-      print(entry);
       ret.add(Wordpair(
           id: int.parse(entry[0]),
           wordOne: entry[1],
