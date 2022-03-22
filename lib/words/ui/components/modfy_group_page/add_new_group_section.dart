@@ -7,7 +7,11 @@ import 'add_new_group_row.dart';
 
 class AddNewWordgroupSection extends StatefulWidget {
   final WordDatabaseHelper database;
-  const AddNewWordgroupSection({Key? key, required this.database})
+
+  final void Function() notifyExecution;
+
+  const AddNewWordgroupSection(
+      {Key? key, required this.database, required this.notifyExecution})
       : super(key: key);
 
   @override
@@ -48,13 +52,14 @@ class _AddNewWordgroupSectionState extends State<AddNewWordgroupSection> {
     });
   }
 
-  _executeChanges() {
+  _executeChanges() async {
+    for (Wordgroup wg in _groupsToAdd) {
+      await widget.database.insertWordgroup(wg);
+    }
     setState(() {
-      for (Wordgroup wg in _groupsToAdd) {
-        widget.database.insertWordgroup(wg);
-      }
       _rows.clear();
       _groupsToAdd.clear();
+      widget.notifyExecution();
     });
   }
 

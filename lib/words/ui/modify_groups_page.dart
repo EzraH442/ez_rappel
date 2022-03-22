@@ -10,6 +10,10 @@ class ModifyWordgroupPage extends StatefulWidget {
 }
 
 class _ModifyWordgroupPageState extends State<ModifyWordgroupPage> {
+  void _notifyExistingGroupsSection() {
+    setState(() {});
+  }
+
   final _db = WordDatabaseHelper.instance;
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,8 @@ class _ModifyWordgroupPageState extends State<ModifyWordgroupPage> {
         body: Column(
           children: [
             ModifyExistingWordgroupsSection(database: _db),
-            AddNewWordgroupSection(database: _db),
+            AddNewWordgroupSection(
+                database: _db, notifyExecution: _notifyExistingGroupsSection),
           ],
         ));
   }

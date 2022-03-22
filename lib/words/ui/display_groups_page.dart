@@ -54,15 +54,6 @@ class _PracticePageState extends State<PracticePage> {
           Expanded(
             child: TextButton(
               onPressed: () {
-                routes.pushModifyWordgroups(context);
-              },
-              child: const Text("Edit Wordgroups"),
-              style: const ButtonStyle(),
-            ),
-          ),
-          Expanded(
-            child: TextButton(
-              onPressed: () {
                 if (_selectedForPractice.isNotEmpty) {
                   routes.pushFlashcards(context, _selectedForPractice);
                 }

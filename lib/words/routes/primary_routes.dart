@@ -5,7 +5,7 @@ import 'package:ez_rappel/database_utils.dart';
 
 import 'package:ez_rappel/words/ui/display_groups_page.dart';
 import 'package:ez_rappel/words/ui/modify_groups_page.dart';
-import 'package:ez_rappel/words/ui/select_groups.dart';
+import 'package:ez_rappel/words/ui/select_wordgroup_to_edit.dart';
 import 'package:ez_rappel/words/ui/flashcard_page.dart';
 
 void pushPractice(BuildContext context) {

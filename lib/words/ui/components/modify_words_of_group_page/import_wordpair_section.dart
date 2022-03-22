@@ -23,7 +23,8 @@ class _ImportWordpairsToWordgroupSectionState
     extends State<ImportWordpairsToWordgroupSection> {
   final _fileHelper = FileHelper();
   final _db = WordDatabaseHelper.instance;
-  bool _preserveIds = false;
+  bool _idsProvided = false;
+  bool _keepExistingWordpairs = false;
 
   bool _hasSelectedFile = false;
   List<Wordpair>? wordPairs;
@@ -40,17 +41,28 @@ class _ImportWordpairsToWordgroupSectionState
     });
   }
 
-  void _addWordsToGroup() {
-    _db.insertAllWordpairs(wordPairs!);
-    if (_preserveIds) {
-      _db.addAllWordpairsToGroup(
-          wordPairs!.map((e) => e.id).toList(), widget.associatedWordgroupId);
+  void _addWordsToGroup() async {
+    if (_idsProvided) {
+      if (_keepExistingWordpairs) {
+
+      } else {
+        
+      }
+    } else {
+      List<int> insertedIds = await _db.insertAllWordpairs(wordPairs!);
+      _db.addAllWordpairsToGroup(insertedIds, widget.associatedWordgroupId);
     }
   }
 
-  void _onCheckboxChanged(bool? checked) {
+  void _onIdCheckboxChanged(bool? checked) {
     setState(() {
-      _preserveIds = !_preserveIds;
+      _idsProvided = !_idsProvided;
+    });
+  }
+
+  void _onKeepExistingCheckboxChanged(bool? checked) {
+    setState(() {
+      _keepExistingWordpairs = !_keepExistingWordpairs;
     });
   }
 
@@ -61,9 +73,17 @@ class _ImportWordpairsToWordgroupSectionState
             onPressed: _initiateFileSelect, child: const Text("Select A File")),
         TextButton(onPressed: _addWordsToGroup, child: const Text("confirm!")),
         Row(children: [
-          const Text("Preserve Ids?"),
-          Checkbox(value: _preserveIds, onChanged: _onCheckboxChanged),
+          const Text("IDs provided?"),
+          Checkbox(value: _idsProvided, onChanged: _onIdCheckboxChanged),
         ]),
+        _idsProvided
+            ? Row(children: [
+                const Text("Ignore existing IDs ?"),
+                Checkbox(
+                    value: _keepExistingWordpairs,
+                    onChanged: _onKeepExistingCheckboxChanged),
+              ])
+            : Row(),
       ],
     );
   }

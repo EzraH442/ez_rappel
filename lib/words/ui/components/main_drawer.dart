@@ -17,6 +17,13 @@ Drawer mainDrawer(context) => Drawer(
             },
           ),
           ListTile(
+            title: const Text("Modify Wordgroups"),
+            onTap: () {
+              Navigator.pop(context);
+              routes.pushModifyWordgroups(context);
+            },
+          ),
+          ListTile(
             title: const Text("Modify Words"),
             onTap: () {
               Navigator.pop(context);
