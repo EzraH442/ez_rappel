@@ -57,8 +57,8 @@ class _ModifyExistingWordpairsSectionState
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                         Row(children: [
-                          Container(width: 150, child: Text(wp.wordOne)),
-                          Container(width: 150, child: Text(wp.wordTwo)),
+                          SizedBox(width: 150, child: Text(wp.wordOne)),
+                          SizedBox(width: 150, child: Text(wp.wordTwo)),
                         ]),
                         IconButton(
                             icon: const Icon(Icons.edit),

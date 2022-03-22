@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ez_rappel/data/Exceptions/invalid_wordpair_csv_row_exception.dart';
 import 'package:ez_rappel/database_utils.dart';
 
 class WordpairFileParser {
@@ -25,12 +26,19 @@ class WordpairFileParser {
 
     for (int i = 1; i < contents.length; i++) {
       List<String> entry = contents[i].split(',');
-      ret.add(Wordpair(
+      if (entry.length > 5) {
+        throw InvalidImportedWordpairException(
+            contents[i], InvalidImportedWordpairException.extraColumn);
+      }
+      Wordpair imported = Wordpair(
           id: int.parse(entry[0]),
           wordOne: entry[1],
           wordTwo: entry[2],
           languageOne: entry[3],
-          languageTwo: entry[4]));
+          languageTwo: entry[4]);
+      if (isWordpairValid(imported)) {
+        ret.add(imported);
+      }
     }
 
     return ret;

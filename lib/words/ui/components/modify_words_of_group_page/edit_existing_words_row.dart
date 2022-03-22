@@ -111,7 +111,7 @@ class _ModifyWordpairRowState extends State<ModifyWordpairRow> {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      Container(
+      SizedBox(
         width: 300,
         child: Row(
           children: [

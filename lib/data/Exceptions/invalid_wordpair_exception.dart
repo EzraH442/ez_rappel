@@ -1,0 +1,2 @@
+class InvalidWordpairException implements Exception {
+}

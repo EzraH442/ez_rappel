@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ez_rappel/database_utils.dart';
 
 Widget rowFutureBuilder<T>(BuildContext context, Future<List<dynamic>> future,
     Widget Function(List<T>) buildColumn) {
@@ -60,7 +61,7 @@ Container wordpairRowTextfield({
   return _styledTextField(
       width: 150,
       controller: controller,
-      maxLength: 50,
+      maxLength: maxWordgroupNameLength,
       labelText: labelText,
       textColor: textColor,
       onEditingComplete: onEditingComplete);
@@ -79,21 +80,21 @@ Row wordgroupEditingRow(
           controller: nameController,
           onEditingComplete: handleChange,
           textColor: textColor,
-          maxLength: 20,
+          maxLength: maxWordpairWordLength,
           labelText: "Name"),
       _wordgroupRowTextField(
           width: 100,
           controller: languageOneController,
           onEditingComplete: handleChange,
           textColor: textColor,
-          maxLength: 3,
+          maxLength: languageCodeLength,
           labelText: "lang 1"),
       _wordgroupRowTextField(
           width: 100,
           controller: languageTwoController,
           onEditingComplete: handleChange,
           textColor: textColor,
-          maxLength: 3,
+          maxLength: languageCodeLength,
           labelText: "lang 2"),
     ],
   );
@@ -102,5 +103,5 @@ Row wordgroupEditingRow(
 mainTextButton(
     {required void Function() onPressed, required String buttonText}) {
   return TextButton(
-      onPressed: onPressed, child: Text(buttonText, style: TextStyle()));
+      onPressed: onPressed, child: Text(buttonText, style: const TextStyle()));
 }

@@ -74,9 +74,9 @@ class _ImportWordpairsToWordgroupSectionState
 
   void _onCancel() {
     setState(() {
-      bool _idsProvided = false;
-      bool _keepExistingWordpairs = false;
-      bool _hasSelectedFile = false;
+      _idsProvided = false;
+      _keepExistingWordpairs = false;
+      _hasSelectedFile = false;
       wordPairs = null;
     });
   }
@@ -96,7 +96,9 @@ class _ImportWordpairsToWordgroupSectionState
                             value: _keepExistingWordpairs,
                             onChanged: _onKeepExistingCheckboxChanged),
                       ])
-                    : Row()
+                    : Row(),
+                TextButton(
+                    onPressed: _addWordsToGroup, child: const Text("Import")),
               ])
             : TextButton(
                 onPressed: _initiateFileSelect,

@@ -44,15 +44,6 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
   }
 
   DropdownButton _buildColumn(List<Wordgroup> wgs) {
-    print(wgs
-        .map((e) => DropdownMenuItem(
-              child: Text(e.name),
-              value: _NameIdPair(id: e.id, name: e.name),
-            ))
-        .toList()
-        .map((e) => e.value)
-        .toList()
-        .toString());
     return DropdownButton(
       items: wgs
           .map((e) => DropdownMenuItem(

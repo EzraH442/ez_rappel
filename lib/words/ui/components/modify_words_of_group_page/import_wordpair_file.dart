@@ -17,7 +17,7 @@ class ImportedWordpairsSection extends StatelessWidget {
     return Column(
       children: [
         Row(
-          children: [
+          children: const [
             SizedBox(width: 30, child: Text("id")),
             SizedBox(width: 150, child: Text("word_one")),
             SizedBox(width: 150, child: Text("word_two")),
