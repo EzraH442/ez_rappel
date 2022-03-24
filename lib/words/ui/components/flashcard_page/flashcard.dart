@@ -9,8 +9,11 @@ class Flashcard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: TextButton(child: Text(word), onPressed: onTap),
-    );
+    return SizedBox(
+        width: 200,
+        height: 100,
+        child: Card(
+          child: TextButton(child: Text(word), onPressed: onTap),
+        ));
   }
 }

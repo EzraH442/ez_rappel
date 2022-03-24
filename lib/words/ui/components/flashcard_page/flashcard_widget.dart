@@ -28,12 +28,13 @@ class _FlashcardWidgetState extends State<FlashcardWidget> {
   void _onNextWordTap() {
     setState(() {
       _index = _random.nextInt(widget.wordpairs.length - 1);
+      _flipped = _swapOrder;
     });
   }
 
   void _onCheckboxToggle(bool? toggled) {
     setState(() {
-      _swapOrder = _swapOrder;
+      _swapOrder = !_swapOrder;
     });
   }
 
@@ -45,8 +46,21 @@ class _FlashcardWidgetState extends State<FlashcardWidget> {
           word: _flipped
               ? widget.wordpairs[_index].wordTwo
               : widget.wordpairs[_index].wordOne),
-      TextButton(onPressed: _onNextWordTap, child: const Text("Next")),
-      Checkbox(value: _swapOrder, onChanged: _onCheckboxToggle)
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            child: Row(children: [
+              const Text("Lang 1 word first?"),
+              Checkbox(value: _swapOrder, onChanged: _onCheckboxToggle)
+            ]),
+          ),
+          Container(
+            child: TextButton(
+                onPressed: _onNextWordTap, child: const Text("Next")),
+          ),
+        ],
+      )
     ]);
   }
 }
