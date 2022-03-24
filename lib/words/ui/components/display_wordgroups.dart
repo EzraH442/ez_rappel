@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:ez_rappel/database_utils.dart';
 
 Widget rowFutureBuilder<T>(BuildContext context, Future<List<dynamic>> future,
-    Widget Function(List<T>) buildColumn) {
+    Widget Function(List<T>) buildWidget) {
   return FutureBuilder<List>(
       future: future,
       builder: (context, snapshot) => snapshot.hasData
-          ? buildColumn(snapshot.data!.cast<T>())
+          ? buildWidget(snapshot.data!.cast<T>())
           : const Center(
               child: CircularProgressIndicator(),
             ));

@@ -1,5 +1,5 @@
-import 'dart:math';
-
+import 'package:ez_rappel/words/ui/components/display_wordgroups.dart';
+import 'package:ez_rappel/words/ui/components/flashcard_page/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ez_rappel/database_utils.dart';
@@ -15,6 +15,17 @@ class FlashcardPage extends StatefulWidget {
 }
 
 class _FlashcardPageState extends State<FlashcardPage> {
+  Future<List<Wordpair>> _getWordsFromMultipleGroups(
+      Set<Wordgroup> wgs, WordDatabaseHelper db) async {
+    List<Wordpair> ret = [];
+
+    for (Wordgroup wg in wgs) {
+      ret.addAll(await db.getWordsFromGroup(wg.id));
+    }
+
+    return ret;
+  }
+
   @override
   Widget build(BuildContext context) {
     WordDatabaseHelper db = WordDatabaseHelper.instance;
@@ -23,80 +34,9 @@ class _FlashcardPageState extends State<FlashcardPage> {
         appBar: AppBar(
           title: const Text("Flashcard Practice"),
         ),
-        body: Column(
-          children: [
-            FutureBuilder<List>(
-              future:
-                  _getWordsFromMultipleGroups(widget.selectedWordGroups, db),
-              builder: (context, snapshot) {
-                return snapshot.hasData
-                    ? _flashcardWidget(_parseDbresult(snapshot.data!))
-                    : const Center(child: CircularProgressIndicator());
-              },
-            )
-          ],
-        ));
+        body: rowFutureBuilder<Wordpair>(
+            context,
+            _getWordsFromMultipleGroups(widget.selectedWordGroups, db),
+            ((wps) => FlashcardWidget(wordpairs: wps))));
   }
-}
-
-List<Wordpair> _parseDbresult(List<dynamic> res) {
-  List<Wordpair> ret = [];
-
-  for (dynamic wp in res) {
-    ret.add(Wordpair(
-        id: wp.id,
-        wordOne: wp.wordOne,
-        wordTwo: wp.wordTwo,
-        languageOne: wp.languageOne,
-        languageTwo: wp.languageTwo));
-  }
-
-  return ret;
-}
-
-Widget _flashcardWidget(List<Wordpair> res) {
-  final random = Random();
-  bool _swapOrder = false;
-
-  int index = random.nextInt(res.length - 1);
-
-  return Column(
-    children: [
-      _makeFlashcard(res[index], _swapOrder),
-      ListTile(
-        title: const Text("Swap front"),
-        trailing: const Icon(
-          Icons.flip,
-        ),
-        onTap: () {
-          _swapOrder = !_swapOrder;
-        },
-      )
-    ],
-  );
-}
-
-TextButton _makeFlashcard(Wordpair wordpair, bool swapOrder) {
-  bool _flipped = false;
-  if (swapOrder) {
-    _flipped = !_flipped;
-  }
-
-  return TextButton(
-    onPressed: () {
-      _flipped = !_flipped;
-    },
-    child: Text(_flipped ? wordpair.wordTwo : wordpair.wordOne),
-  );
-}
-
-Future<List<Wordpair>> _getWordsFromMultipleGroups(
-    Set<Wordgroup> wgs, WordDatabaseHelper db) async {
-  List<Wordpair> ret = [];
-
-  for (Wordgroup wg in wgs) {
-    ret.addAll(await db.getWordsFromGroup(wg.id));
-  }
-
-  return ret;
 }
