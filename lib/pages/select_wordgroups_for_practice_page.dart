@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ez_rappel/database_utils.dart';
 import 'package:ez_rappel/ui/routes/primary_routes.dart' as routes;
-
-import 'package:ez_rappel/ui/components/display_wordgroups.dart' as components;
+import 'package:ez_rappel/page_components.dart' as components;
 
 class PracticePage extends StatefulWidget {
   const PracticePage({Key? key}) : super(key: key);

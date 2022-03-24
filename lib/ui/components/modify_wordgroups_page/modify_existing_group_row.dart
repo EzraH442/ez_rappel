@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ez_rappel/database_utils.dart';
-import 'package:ez_rappel/ui/components/display_wordgroups.dart';
+import '../display_wordgroups.dart';
 
 class ModifyWordgroupRow extends StatefulWidget {
   static const int unchanged = 0;

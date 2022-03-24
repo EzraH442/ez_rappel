@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ez_rappel/database_utils.dart';
 
-import 'package:ez_rappel/ui/components/display_wordgroups.dart';
+import '../display_wordgroups.dart';
 import 'modify_existing_group_row.dart';
 
 class ModifyExistingWordgroupsSection extends StatefulWidget {

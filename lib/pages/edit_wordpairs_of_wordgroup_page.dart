@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:ez_rappel/ui/components/modify_words_of_group_page/edit_existing_words_section.dart';
-import 'package:ez_rappel/ui/components/modify_words_of_group_page/import_wordpair_section.dart';
+import 'package:ez_rappel/page_components.dart';
 
 class EditWordpairsOfWordgroupPage extends StatefulWidget {
   final int wordgroupId;
