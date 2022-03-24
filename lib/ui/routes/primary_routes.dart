@@ -1,4 +1,4 @@
-import 'package:ez_rappel/ui/components/modify_words_of_group_page/edit_wordpairs_of_wordgroup.dart';
+import 'package:ez_rappel/pages/edit_wordpairs_of_wordgroup.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ez_rappel/database_utils.dart';
