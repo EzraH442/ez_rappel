@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/words/routes/primary_routes.dart' as routes;
+import 'package:ez_rappel/ui/routes/primary_routes.dart' as routes;
 
 Drawer mainDrawer(context) => Drawer(
       child: ListView(

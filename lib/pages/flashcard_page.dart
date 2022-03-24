@@ -1,5 +1,5 @@
-import 'package:ez_rappel/words/ui/components/display_wordgroups.dart';
-import 'package:ez_rappel/words/ui/components/flashcard_page/flashcard_widget.dart';
+import 'package:ez_rappel/ui/components/display_wordgroups.dart';
+import 'package:ez_rappel/ui/components/flashcard_page/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ez_rappel/database_utils.dart';

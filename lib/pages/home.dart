@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/words/ui/components/main_drawer.dart';
+import 'package:ez_rappel/ui/components/main_drawer.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
