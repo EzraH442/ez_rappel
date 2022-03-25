@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ez_rappel/ui/components/type_practice_page/accent_info_table.dart';
 import 'package:ez_rappel/ui/components/type_practice_page/text_practice_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:ez_rappel/database_utils.dart';
@@ -68,6 +69,12 @@ class _TypePracticeWidgetState extends State<TypePracticeWidget> {
   }
 
   @override
+  void dispose() {
+    _tec.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(children: [
       SizedBox(
@@ -92,7 +99,8 @@ class _TypePracticeWidgetState extends State<TypePracticeWidget> {
           ]),
           TextButton(onPressed: _onNextWordTap, child: const Text("Next")),
         ],
-      )
+      ),
+      const AccentInfoSection(),
     ]);
   }
 }
