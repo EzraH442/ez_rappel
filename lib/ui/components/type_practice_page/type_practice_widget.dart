@@ -14,25 +14,51 @@ class TypePracticeWidget extends StatefulWidget {
 }
 
 class _TypePracticeWidgetState extends State<TypePracticeWidget> {
-  bool _swapOrder = false;
+  static const unsubmitted = 0;
+  static const correct = 1;
+  static const incorrect = 2;
+
   final Random _random = Random();
+  final _tec = TextEditingController();
   late int _index = _random.nextInt(widget.wordpairs.length);
+
+  bool _swapOrder = false;
+  bool _submitted = false;
   int _correct = 0;
   int _total = 0;
+  int _status = unsubmitted;
 
-  void _onWordSubmitted(bool correct) {
-    setState(() {
-      _total++;
-      if (correct) {
-        _correct++;
+  void _onWordSubmitted(String val) {
+    if (!_submitted) {
+      int newStatus;
+      if (val ==
+          (_swapOrder
+              ? widget.wordpairs[_index].wordOne
+              : widget.wordpairs[_index].wordTwo)) {
+        newStatus = correct;
+      } else {
+        newStatus = incorrect;
       }
-    });
+      setState(() {
+        _submitted = true;
+        _status = newStatus;
+        _total++;
+        if ((_status == correct)) {
+          _correct++;
+        }
+      });
+    } else {
+      _onNextWordTap();
+    }
   }
 
   void _onNextWordTap() {
     setState(() {
       _index = _random.nextInt(widget.wordpairs.length - 1);
+      _status = unsubmitted;
+      _submitted = false;
     });
+    _tec.clear();
   }
 
   void _onCheckboxToggle(bool? toggled) {
@@ -44,25 +70,27 @@ class _TypePracticeWidgetState extends State<TypePracticeWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      SizedBox(
+          height: 40,
+          child: Center(
+            child: Text(
+                "Score: $_correct / $_total: ${(_total == 0) ? 0 : ((_correct / _total) * 100).floor()}%"),
+          )),
       TypePracticeTextfield(
-          wp: widget.wordpairs[_index],
-          swapOrder: _swapOrder,
-          onSubmit: _onWordSubmitted),
+        wp: widget.wordpairs[_index],
+        swapOrder: _swapOrder,
+        tec: _tec,
+        onSubmit: _onWordSubmitted,
+        status: _status,
+      ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-              "Score: $_correct / $_total: ${(_total == 0) ? 0 : ((_correct / _total) * 100).floor()}%"),
-          Container(
-            child: Row(children: [
-              const Text("Lang 1 word given?"),
-              Checkbox(value: _swapOrder, onChanged: _onCheckboxToggle)
-            ]),
-          ),
-          Container(
-            child: TextButton(
-                onPressed: _onNextWordTap, child: const Text("Next")),
-          ),
+          Row(children: [
+            const Text("Lang 1 word given?"),
+            Checkbox(value: _swapOrder, onChanged: _onCheckboxToggle)
+          ]),
+          TextButton(onPressed: _onNextWordTap, child: const Text("Next")),
         ],
       )
     ]);
