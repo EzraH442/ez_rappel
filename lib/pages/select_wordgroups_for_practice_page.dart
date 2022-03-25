@@ -49,16 +49,23 @@ class _PracticePageState extends State<PracticePage> {
           itemBuilder: (_, int i) => _buildWordgroupRow(results, i)),
       Row(
         children: [
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-                if (_selectedForPractice.isNotEmpty) {
-                  routes.pushFlashcards(context, _selectedForPractice);
-                }
-              },
-              child: const Text("Start"),
-              style: const ButtonStyle(),
-            ),
+          TextButton(
+            onPressed: () {
+              if (_selectedForPractice.isNotEmpty) {
+                routes.pushFlashcards(context, _selectedForPractice);
+              }
+            },
+            child: const Text("Start Flashcards"),
+            style: const ButtonStyle(),
+          ),
+          TextButton(
+            onPressed: () {
+              if (_selectedForPractice.isNotEmpty) {
+                routes.pushTypingPractice(context, _selectedForPractice);
+              }
+            },
+            child: const Text("Start Typing Practice"),
+            style: const ButtonStyle(),
           ),
         ],
       )
