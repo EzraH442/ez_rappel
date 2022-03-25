@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ez_rappel/ui/components/flashcard_page/edit_wordpair_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:ez_rappel/database_utils.dart';
 
@@ -18,6 +19,7 @@ class _FlashcardWidgetState extends State<FlashcardWidget> {
   bool _swapOrder = false;
   final Random _random = Random();
   late int _index = _random.nextInt(widget.wordpairs.length);
+  late final _wordpairs = widget.wordpairs;
 
   void _onFlashcardTap() {
     setState(() {
@@ -27,7 +29,7 @@ class _FlashcardWidgetState extends State<FlashcardWidget> {
 
   void _onNextWordTap() {
     setState(() {
-      _index = _random.nextInt(widget.wordpairs.length - 1);
+      _index = _random.nextInt(_wordpairs.length - 1);
       _flipped = _swapOrder;
     });
   }
@@ -44,8 +46,8 @@ class _FlashcardWidgetState extends State<FlashcardWidget> {
       Flashcard(
           onTap: _onFlashcardTap,
           word: _flipped
-              ? widget.wordpairs[_index].wordTwo
-              : widget.wordpairs[_index].wordOne),
+              ? _wordpairs[_index].wordTwo
+              : _wordpairs[_index].wordOne),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -60,7 +62,18 @@ class _FlashcardWidgetState extends State<FlashcardWidget> {
                 onPressed: _onNextWordTap, child: const Text("Next")),
           ),
         ],
-      )
+      ),
+      TextButton(
+          onPressed: () async {
+            Wordpair? result =
+                await openEditWordpairDialog(context, _wordpairs[_index]);
+            setState(() {
+              if (result != null) {
+                _wordpairs[_index] = result;
+              }
+            });
+          },
+          child: const Text("Edit current wordpair"))
     ]);
   }
 }

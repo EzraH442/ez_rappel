@@ -174,7 +174,7 @@ class WordDatabaseHelper<WordPair> {
         ${_wordPairColumns["wordTwo"]} = "${wp.wordTwo}",
         ${_wordPairColumns["languageOne"]} = "${wp.languageOne}",
         ${_wordPairColumns["languageTwo"]} = "${wp.languageTwo}"
-      )
+      
       WHERE ${_wordPairColumns["id"]} = ${wp.id}
     ''');
   }

@@ -29,9 +29,11 @@ class ModifyWordgroupRow extends StatefulWidget {
 }
 
 class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
-  final _nameEC = TextEditingController();
-  final _lang1EC = TextEditingController();
-  final _lang2EC = TextEditingController();
+  late final _nameEC = TextEditingController(text: widget.oldValues.name);
+  late final _lang1EC =
+      TextEditingController(text: widget.oldValues.languageOne);
+  late final _lang2EC =
+      TextEditingController(text: widget.oldValues.languageTwo);
 
   int status = ModifyWordgroupRow.unchanged;
   Wordgroup? newValues;

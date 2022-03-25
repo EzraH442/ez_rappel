@@ -29,8 +29,8 @@ class ModifyWordpairRow extends StatefulWidget {
 }
 
 class _ModifyWordpairRowState extends State<ModifyWordpairRow> {
-  final _wordOneEC = TextEditingController();
-  final _wordTwoEC = TextEditingController();
+  late final _wordOneEC = TextEditingController(text: widget.oldValues.wordOne);
+  late final _wordTwoEC = TextEditingController(text: widget.oldValues.wordTwo);
 
   int status = ModifyWordpairRow.unchanged;
   Wordpair? newValues;
