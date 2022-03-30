@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:ez_rappel/algo/shuffle_wordpair_list.dart';
 import 'package:ez_rappel/ui/components/flashcard_page/edit_wordpair_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:ez_rappel/database_utils.dart';
@@ -17,9 +16,8 @@ class FlashcardWidget extends StatefulWidget {
 class _FlashcardWidgetState extends State<FlashcardWidget> {
   bool _flipped = false;
   bool _swapOrder = false;
-  final Random _random = Random();
-  late int _index = _random.nextInt(widget.wordpairs.length);
-  late final _wordpairs = widget.wordpairs;
+  late int _index = 0;
+  late final _wordpairs = List<Wordpair>.from(widget.wordpairs);
 
   void _onFlashcardTap() {
     setState(() {
@@ -28,10 +26,29 @@ class _FlashcardWidgetState extends State<FlashcardWidget> {
   }
 
   void _onNextWordTap() {
-    setState(() {
-      _index = _random.nextInt(_wordpairs.length - 1);
-      _flipped = _swapOrder;
-    });
+    if (_index < _wordpairs.length - 1) {
+      setState(() {
+        _index++;
+        _flipped = _swapOrder;
+      });
+    } else {
+      setState(() {
+        _index = 0;
+      });
+    }
+  }
+
+  void _onPreviousWordTap() {
+    if (_index > 0) {
+      setState(() {
+        _index--;
+        _flipped = _swapOrder;
+      });
+    } else {
+      setState(() {
+        _index = _wordpairs.length - 1;
+      });
+    }
   }
 
   void _onCheckboxToggle(bool? toggled) {
@@ -40,26 +57,57 @@ class _FlashcardWidgetState extends State<FlashcardWidget> {
     });
   }
 
+  void _onShuffle() {
+    setState(() {
+      shuffleList<Wordpair>(_wordpairs);
+      _index = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Flashcard(
-          onTap: _onFlashcardTap,
-          word: _flipped
-              ? _wordpairs[_index].wordTwo
-              : _wordpairs[_index].wordOne),
+    return Center(
+        child: Column(children: [
+      Container(
+        padding: const EdgeInsets.all(8),
+        child: Text("${(_index + 1).toString()} / ${_wordpairs.length}"),
+      ),
+      IntrinsicWidth(
+        child: Column(children: [
+          Flashcard(
+              onTap: _onFlashcardTap,
+              word: _flipped
+                  ? _wordpairs[_index].wordTwo
+                  : _wordpairs[_index].wordOne),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: _onPreviousWordTap),
+              IconButton(
+                  icon: const Icon(Icons.arrow_forward),
+                  onPressed: _onNextWordTap),
+            ],
+          ),
+        ]),
+      ),
       Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
             child: Row(children: [
               const Text("Lang 1 word first?"),
               Checkbox(value: _swapOrder, onChanged: _onCheckboxToggle)
             ]),
           ),
           Container(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
             child: TextButton(
-                onPressed: _onNextWordTap, child: const Text("Next")),
+              child: const Text("Shuffle"),
+              onPressed: _onShuffle,
+            ),
           ),
         ],
       ),
@@ -74,6 +122,6 @@ class _FlashcardWidgetState extends State<FlashcardWidget> {
             });
           },
           child: const Text("Edit current wordpair"))
-    ]);
+    ]));
   }
 }
