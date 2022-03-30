@@ -26,7 +26,7 @@ class AccentInfoSection extends StatelessWidget {
         _AccentInfoRow(accent: "ç", unicode: "U+00E7"),
         _AccentInfoRow(accent: "è", unicode: "U+00E8"),
         _AccentInfoRow(accent: "é", unicode: "U+00E9"),
-        _AccentInfoRow(accent: "ë", unicode: "U+00EA"),
+        _AccentInfoRow(accent: "ê", unicode: "U+00EA"),
         _AccentInfoRow(accent: "ë", unicode: "U+00EB"),
         _AccentInfoRow(accent: "ì", unicode: "U+00EC"),
         _AccentInfoRow(accent: "ñ", unicode: "U+00F1"),

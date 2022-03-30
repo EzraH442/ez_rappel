@@ -36,9 +36,8 @@ class _TypePracticeTextfieldState extends State<TypePracticeTextfield> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
       width: 300,
-      height: 200,
       child: Column(
         children: [
           Text(
