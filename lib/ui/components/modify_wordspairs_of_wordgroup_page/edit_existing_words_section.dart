@@ -56,10 +56,16 @@ class _ModifyExistingWordpairsSectionState
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                        Row(children: [
-                          SizedBox(width: 150, child: Text(wp.wordOne)),
-                          SizedBox(width: 150, child: Text(wp.wordTwo)),
-                        ]),
+                        Flexible(
+                            child:
+                                Row(mainAxisSize: MainAxisSize.max, children: [
+                          Expanded(
+                            child: Text(wp.wordOne),
+                          ),
+                          Expanded(
+                            child: Text(wp.wordTwo),
+                          ),
+                        ])),
                         IconButton(
                             icon: const Icon(Icons.edit),
                             onPressed: () =>

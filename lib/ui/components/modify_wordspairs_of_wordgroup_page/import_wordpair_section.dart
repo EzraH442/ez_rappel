@@ -28,7 +28,7 @@ class _ImportWordpairsToWordgroupSectionState
   final _fileHelper = FileHelper();
   final _db = WordDatabaseHelper.instance;
   bool _idsProvided = false;
-  bool _keepExistingWordpairs = false;
+  bool _replaceExistingWordpairs = false;
 
   bool _hasSelectedFile = false;
   List<Wordpair>? wordPairs;
@@ -47,8 +47,11 @@ class _ImportWordpairsToWordgroupSectionState
 
   void _addWordsToGroup() async {
     if (_idsProvided) {
-      if (_keepExistingWordpairs) {
-      } else {}
+      if (_replaceExistingWordpairs) {
+        
+      } else {
+        
+      }
     } else {
       List<int> insertedIds = await _db.insertAllWordpairs(wordPairs!);
       _db.addAllWordpairsToGroup(insertedIds, widget.associatedWordgroupId);
@@ -68,14 +71,14 @@ class _ImportWordpairsToWordgroupSectionState
 
   void _onKeepExistingCheckboxChanged(bool? checked) {
     setState(() {
-      _keepExistingWordpairs = !_keepExistingWordpairs;
+      _replaceExistingWordpairs = !_replaceExistingWordpairs;
     });
   }
 
   void _onCancel() {
     setState(() {
       _idsProvided = false;
-      _keepExistingWordpairs = false;
+      _replaceExistingWordpairs = false;
       _hasSelectedFile = false;
       wordPairs = null;
     });
@@ -91,9 +94,9 @@ class _ImportWordpairsToWordgroupSectionState
                 Checkbox(value: _idsProvided, onChanged: _onIdCheckboxChanged),
                 _idsProvided
                     ? Row(children: [
-                        const Text("Ignore existing IDs ?"),
+                        const Text("Replace existing wordpairs?"),
                         Checkbox(
-                            value: _keepExistingWordpairs,
+                            value: _replaceExistingWordpairs,
                             onChanged: _onKeepExistingCheckboxChanged),
                       ])
                     : Row(),

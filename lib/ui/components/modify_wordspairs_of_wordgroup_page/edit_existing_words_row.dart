@@ -111,25 +111,27 @@ class _ModifyWordpairRowState extends State<ModifyWordpairRow> {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      SizedBox(
-        width: 300,
-        child: Row(
-          children: [
-            wordpairRowTextfield(
+      Flexible(
+          child: Row(
+        children: [
+          Expanded(
+            child: wordpairRowTextfield(
                 controller: _wordOneEC,
                 onEditingComplete: _handleChanged,
                 textColor: _decideColor(),
                 labelText: "word one"),
-            wordpairRowTextfield(
+          ),
+          Expanded(
+            child: wordpairRowTextfield(
                 controller: _wordTwoEC,
                 onEditingComplete: _handleChanged,
                 textColor: _decideColor(),
                 labelText: "word two"),
-          ],
-        ),
-      ),
-      Expanded(
-          child: Row(
+          )
+        ],
+      )),
+      Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
               onPressed: _handleCancel,
@@ -148,7 +150,7 @@ class _ModifyWordpairRowState extends State<ModifyWordpairRow> {
               icon: const Icon(Icons.cancel),
               color: Colors.black),
         ],
-      ))
+      )
     ]);
   }
 }

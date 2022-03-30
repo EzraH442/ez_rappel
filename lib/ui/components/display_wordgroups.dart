@@ -13,7 +13,7 @@ Widget rowFutureBuilder<T>(BuildContext context, Future<List<dynamic>> future,
 }
 
 Container _styledTextField({
-  required double width,
+  double? width,
   required TextEditingController controller,
   required int maxLength,
   required String labelText,
@@ -35,23 +35,6 @@ Container _styledTextField({
   );
 }
 
-Container _wordgroupRowTextField({
-  required double width,
-  required TextEditingController controller,
-  required int maxLength,
-  required String labelText,
-  required Color textColor,
-  required void Function() onEditingComplete,
-}) {
-  return _styledTextField(
-      width: width,
-      controller: controller,
-      maxLength: maxLength,
-      labelText: labelText,
-      textColor: textColor,
-      onEditingComplete: onEditingComplete);
-}
-
 Container wordpairRowTextfield({
   required TextEditingController controller,
   required Color textColor,
@@ -59,7 +42,6 @@ Container wordpairRowTextfield({
   required void Function() onEditingComplete,
 }) {
   return _styledTextField(
-      width: 150,
       controller: controller,
       maxLength: maxWordgroupNameLength,
       labelText: labelText,
@@ -75,27 +57,30 @@ Row wordgroupEditingRow(
     required Color textColor}) {
   return Row(
     children: [
-      _wordgroupRowTextField(
-          width: 250,
-          controller: nameController,
-          onEditingComplete: handleChange,
-          textColor: textColor,
-          maxLength: maxWordpairWordLength,
-          labelText: "Name"),
-      _wordgroupRowTextField(
-          width: 100,
-          controller: languageOneController,
-          onEditingComplete: handleChange,
-          textColor: textColor,
-          maxLength: languageCodeLength,
-          labelText: "lang 1"),
-      _wordgroupRowTextField(
-          width: 100,
-          controller: languageTwoController,
-          onEditingComplete: handleChange,
-          textColor: textColor,
-          maxLength: languageCodeLength,
-          labelText: "lang 2"),
+      Expanded(
+          flex: 3,
+          child: _styledTextField(
+              controller: nameController,
+              onEditingComplete: handleChange,
+              textColor: textColor,
+              maxLength: maxWordpairWordLength,
+              labelText: "Name")),
+      Expanded(
+          flex: 1,
+          child: _styledTextField(
+              controller: languageOneController,
+              onEditingComplete: handleChange,
+              textColor: textColor,
+              maxLength: languageCodeLength,
+              labelText: "lang 1")),
+      Expanded(
+          flex: 1,
+          child: _styledTextField(
+              controller: languageTwoController,
+              onEditingComplete: handleChange,
+              textColor: textColor,
+              maxLength: languageCodeLength,
+              labelText: "lang 2")),
     ],
   );
 }

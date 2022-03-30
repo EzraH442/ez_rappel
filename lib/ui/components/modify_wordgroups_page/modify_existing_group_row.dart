@@ -116,16 +116,16 @@ class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      Container(
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Flexible(
           child: wordgroupEditingRow(
               nameController: _nameEC,
               languageOneController: _lang1EC,
               languageTwoController: _lang2EC,
               handleChange: _handleChanged,
               textColor: _decideColor())),
-      Expanded(
-          child: Row(
+      Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
               onPressed: _handleCancel,
@@ -144,7 +144,7 @@ class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
               icon: const Icon(Icons.cancel),
               color: Colors.black),
         ],
-      ))
+      )
     ]);
   }
 }
