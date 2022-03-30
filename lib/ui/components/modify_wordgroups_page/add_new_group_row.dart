@@ -84,15 +84,14 @@ class _AddNewWordgroupRowState extends State<AddNewWordgroupRow> {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      Container(
+      Flexible(
           child: wordgroupEditingRow(
               nameController: _nameEC,
               languageOneController: _lang1EC,
               languageTwoController: _lang2EC,
               handleChange: _handleChanged,
               textColor: _decideColor())),
-      Expanded(
-          child: Row(
+      Row(
         children: [
           IconButton(
               onPressed: _handleConfirm,
@@ -103,7 +102,7 @@ class _AddNewWordgroupRowState extends State<AddNewWordgroupRow> {
               icon: const Icon(Icons.delete),
               color: Colors.black),
         ],
-      ))
+      )
     ]);
   }
 }

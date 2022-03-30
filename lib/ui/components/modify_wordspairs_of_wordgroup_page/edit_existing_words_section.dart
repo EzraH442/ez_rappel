@@ -53,25 +53,28 @@ class _ModifyExistingWordpairsSectionState
                     removeFromModified: _removeFromExisitingWordpairsModified,
                     commitChanges: _addToModifiedExistingPairs,
                   )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                        Flexible(
-                            child:
-                                Row(mainAxisSize: MainAxisSize.max, children: [
-                          Expanded(
-                            child: Text(wp.wordOne),
-                          ),
-                          Expanded(
-                            child: Text(wp.wordTwo),
-                          ),
-                        ])),
-                        IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () =>
-                                _notifyExistingWordpairStatusChange(
-                                    wp.id, ModifyWordpairRow.unchanged)),
-                      ]))
+                : Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                              child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                Expanded(
+                                  child: Text(wp.wordOne),
+                                ),
+                                Expanded(
+                                  child: Text(wp.wordTwo),
+                                ),
+                              ])),
+                          IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () =>
+                                  _notifyExistingWordpairStatusChange(
+                                      wp.id, ModifyWordpairRow.unchanged)),
+                        ])))
             .toList());
   }
 
