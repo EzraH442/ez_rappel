@@ -41,35 +41,51 @@ class _ModifyExistingWordgroupsSectionState
     });
   }
 
-  Column _buildExistingGroupsColumn(List<Wordgroup> wgs) {
-    return Column(
-        children: wgs.map((wg) {
-      if (_modifiedIds.containsKey(wg.id)) {
-        return ModifyWordgroupRow(
-          wordgroupId: wg.id,
-          oldValues: wg,
-          notifyStatusChange: _notifyExistingWordgroupStatusChange,
-          removeFromModified: _removeFromExisitingWordgroupsModified,
-          commitChanges: _addToModifiedExistingGroups,
-        );
-      } else {
-        return ListTile(
-          leading: Text(wg.name),
-          trailing: IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () => _notifyExistingWordgroupStatusChange(
-                wg.id, ModifyWordgroupRow.unchanged),
-          ),
-        );
-      }
-    }).toList());
+  Row _buildMainButtons() {
+    return Row(
+      children: [
+        confirmButton(onPressed: _executeChanges),
+        cancelButton(onPressed: _resetAllChanges),
+      ],
+      mainAxisAlignment: MainAxisAlignment.end,
+    );
   }
 
-  Row _buildMainButtons() {
-    return Row(children: [
-      mainTextButton(onPressed: _executeChanges, buttonText: "Confirm"),
-      mainTextButton(onPressed: _resetAllChanges, buttonText: "Cancel"),
-    ]);
+  Column _buildExistingGroupsColumn(List<Wordgroup> wgs) {
+    if (wgs.isEmpty) {
+      return Column(children: const [
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text("Add your first wordgroup below!"),
+        )
+      ]);
+    } else {
+      List<Widget> widgets = [];
+      widgets.addAll(wgs.map((wg) {
+        if (_modifiedIds.containsKey(wg.id)) {
+          return ModifyWordgroupRow(
+            wordgroupId: wg.id,
+            oldValues: wg,
+            notifyStatusChange: _notifyExistingWordgroupStatusChange,
+            removeFromModified: _removeFromExisitingWordgroupsModified,
+            commitChanges: _addToModifiedExistingGroups,
+          );
+        } else {
+          return ListTile(
+            leading: Text(wg.name),
+            trailing: IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () => _notifyExistingWordgroupStatusChange(
+                  wg.id, ModifyWordgroupRow.unchanged),
+            ),
+          );
+        }
+      }).toList());
+      widgets.add((_buildMainButtons()));
+      return Column(
+        children: widgets,
+      );
+    }
   }
 
   void _executeChanges() {
@@ -97,12 +113,7 @@ class _ModifyExistingWordgroupsSectionState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        rowFutureBuilder<Wordgroup>(context,
-            widget.database.queryAllWordgroups(), _buildExistingGroupsColumn),
-        _buildMainButtons(),
-      ],
-    );
+    return rowFutureBuilder<Wordgroup>(context,
+        widget.database.queryAllWordgroups(), _buildExistingGroupsColumn);
   }
 }

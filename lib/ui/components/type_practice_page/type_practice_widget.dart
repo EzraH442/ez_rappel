@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ez_rappel/algo/shuffle_wordpair_list.dart';
 import 'package:ez_rappel/ui/components/type_practice_page/accent_info_table.dart';
 import 'package:ez_rappel/ui/components/type_practice_page/text_practice_textfield.dart';

@@ -90,3 +90,24 @@ mainTextButton(
   return TextButton(
       onPressed: onPressed, child: Text(buttonText, style: const TextStyle()));
 }
+
+confirmButton({ required void Function() onPressed }) {
+  return IconButton(onPressed: onPressed, icon: const Icon(
+    Icons.check_circle,
+    color: Colors.green
+  ));
+}
+
+cancelButton({ required void Function() onPressed }) {
+  return IconButton(onPressed: onPressed, icon: const Icon(
+    Icons.cancel,
+    color: Colors.red
+  ));
+}
+
+addNewButton({ required void Function() onPressed }) {
+  return IconButton(onPressed: onPressed, icon: const Icon(
+    Icons.add,
+    color: Colors.black,
+  ));
+}

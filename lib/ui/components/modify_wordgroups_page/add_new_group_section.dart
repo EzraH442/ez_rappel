@@ -71,20 +71,28 @@ class _AddNewWordgroupSectionState extends State<AddNewWordgroupSection> {
   }
 
   Column _buildMainColumn() {
-    List<AddNewWordgroupRow> rows = _rows.toList();
+    List<Widget> widgets = [];
+    widgets.add(const Divider(
+      color: Colors.black,
+      height: 2,
+      indent: 12,
+      endIndent: 12,
+      thickness: 2,
+    ));
+    widgets.addAll(_rows.toList());
 
-    return Column(
-      children: rows,
-    );
+    return Column(children: widgets);
   }
 
   Row _buildMainButtons() {
-    return Row(children: [
-      mainTextButton(
-          onPressed: _addNewRow, buttonText: "Add Another Wordgroup"),
-      mainTextButton(onPressed: _executeChanges, buttonText: "Confirm"),
-      mainTextButton(onPressed: _resetAllChanges, buttonText: "Cancel"),
-    ]);
+    return Row(
+      children: [
+        addNewButton(onPressed: _addNewRow),
+        confirmButton(onPressed: _executeChanges),
+        cancelButton(onPressed: _resetAllChanges)
+      ],
+      mainAxisAlignment: MainAxisAlignment.end,
+    );
   }
 
   @override

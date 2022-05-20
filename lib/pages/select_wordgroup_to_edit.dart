@@ -43,17 +43,19 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
     routes.pushModifyWordpairsOfGroup(context, _value!.id);
   }
 
-  DropdownButton _buildColumn(List<Wordgroup> wgs) {
-    return DropdownButton(
-      items: wgs
-          .map((e) => DropdownMenuItem(
-                child: Text(e.name),
-                value: _NameIdPair(id: e.id, name: e.name),
-              ))
-          .toList(),
-      onChanged: onChanged,
-      value: _value,
-    );
+  Widget _buildColumn(List<Wordgroup> wgs) {
+    return wgs.isEmpty
+        ? const Text("Create your first wordgroup before continuing")
+        : DropdownButton(
+            items: wgs
+                .map((e) => DropdownMenuItem(
+                      child: Text(e.name),
+                      value: _NameIdPair(id: e.id, name: e.name),
+                    ))
+                .toList(),
+            onChanged: onChanged,
+            value: _value,
+          );
   }
 
   @override
@@ -64,14 +66,20 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
       appBar: AppBar(
         title: const Text("Select wordgroup to edit"),
       ),
-      body: Card(
-          child: Column(children: [
-        rowFutureBuilder<Wordgroup>(
-            context, _db.queryAllWordgroups(), _buildColumn),
-        isDisabled
-            ? const Text("Please select a wordgroup")
-            : TextButton(onPressed: onButtonPressed, child: const Text("Edit"))
-      ])),
+      body: Center(
+        child: Card(
+            child: Column(children: [
+          rowFutureBuilder<Wordgroup>(
+              context, _db.queryAllWordgroups(), _buildColumn),
+          isDisabled
+              ? const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("Please select a wordgroup"),
+                )
+              : TextButton(
+                  onPressed: onButtonPressed, child: const Text("Edit"))
+        ])),
+      ),
     );
   }
 }

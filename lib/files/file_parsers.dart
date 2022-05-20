@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ez_rappel/data/Exceptions/invalid_csv_header_exception.dart';
 import 'package:ez_rappel/data/Exceptions/invalid_wordpair_csv_row_exception.dart';
 import 'package:ez_rappel/database_utils.dart';
 
@@ -19,9 +20,10 @@ class WordpairFileParser {
         columnNames[1] == "word_one" &&
         columnNames[2] == "word_two" &&
         columnNames[3] == "language_one" &&
-        columnNames[4] == "language_two")) {
-      //TODO add error
-      return ret;
+        columnNames[4] == "language_two" && 
+        columnNames.length == 5  
+      )) {
+      throw InvalidCSVHeaderException(contents[0]);
     }
 
     for (int i = 1; i < contents.length; i++) {

@@ -6,16 +6,13 @@ class InvalidImportedWordpairException implements FormatException {
   static const extraColumn = 2;
 
   @override
-  // TODO: implement message
-  String get message => "Unexpected ";
+  String get message => "Unexpected entry";
 
   @override
-  // TODO: implement offset
-  int? get offset => throw UnimplementedError();
+  int? get offset => 0;
 
   @override
-  // TODO: implement source
-  get source => throw UnimplementedError();
+  get source => row;
 
   InvalidImportedWordpairException(this.row, this.cause);
 }
