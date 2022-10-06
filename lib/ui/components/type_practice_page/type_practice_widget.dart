@@ -1,8 +1,8 @@
 import 'package:ez_rappel/algo/shuffle_wordpair_list.dart';
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:ez_rappel/ui/components/type_practice_page/accent_info_table.dart';
 import 'package:ez_rappel/ui/components/type_practice_page/text_practice_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/database_utils.dart';
 
 class TypePracticeWidget extends StatefulWidget {
   final List<Wordpair> wordpairs;
@@ -34,9 +34,7 @@ class _TypePracticeWidgetState extends State<TypePracticeWidget> {
     if (!_submitted) {
       int newStatus;
       if (val ==
-          (_swapOrder
-              ? _wordpairs[_index].wordOne
-              : _wordpairs[_index].wordTwo)) {
+          (_swapOrder ? _wordpairs[_index].first : _wordpairs[_index].second)) {
         newStatus = correct;
       } else {
         newStatus = incorrect;

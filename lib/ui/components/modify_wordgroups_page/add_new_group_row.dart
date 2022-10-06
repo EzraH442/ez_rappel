@@ -61,7 +61,7 @@ class _AddNewTagState extends State<AddNewTag> {
 
   _handleCancel() {
     setState(() {
-      widget.onCancel(widget.rowId, tag);
+      widget.onCancel(widget.rowId, tag!);
       _nameEC.text = "";
       _lang1EC.text = "";
       _lang2EC.text = "";

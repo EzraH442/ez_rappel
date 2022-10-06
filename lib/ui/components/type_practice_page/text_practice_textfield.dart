@@ -1,5 +1,5 @@
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/database_utils.dart';
 
 class TypePracticeTextfield extends StatefulWidget {
   final Wordpair wp;
@@ -41,7 +41,7 @@ class _TypePracticeTextfieldState extends State<TypePracticeTextfield> {
       child: Column(
         children: [
           Text(
-            widget.swapOrder ? widget.wp.wordTwo : widget.wp.wordOne,
+            widget.swapOrder ? widget.wp.first : widget.wp.second,
             style: TextStyle(color: _decideColor()),
           ),
           TextField(
@@ -53,7 +53,7 @@ class _TypePracticeTextfieldState extends State<TypePracticeTextfield> {
               alignment: Alignment.bottomCenter,
               height: 50,
               child: Text((widget.status == 2)
-                  ? "The corrent answer was: ${widget.swapOrder ? widget.wp.wordOne : widget.wp.wordTwo}"
+                  ? "The corrent answer was: ${widget.swapOrder ? widget.wp.first : widget.wp.second}"
                   : "")),
         ],
       ),

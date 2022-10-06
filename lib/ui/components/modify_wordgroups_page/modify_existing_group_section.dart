@@ -49,7 +49,7 @@ class _ModifyExistingWordgroupsSectionState
     );
   }
 
-  Widget _buildExistingGroupsColumn(List<Tag> tags) {
+  Column _buildExistingGroupsColumn(List<Tag> tags) {
     if (tags.isEmpty) {
       return Column(children: const [
         Padding(
@@ -113,7 +113,7 @@ class _ModifyExistingWordgroupsSectionState
   @override
   Widget build(BuildContext context) {
     var db = context.read<Wordbase>();
-    return rowFutureBuilder<Tags>(
+    return rowFutureBuilder<Tag>(
         context, db.allTags, _buildExistingGroupsColumn);
   }
 }

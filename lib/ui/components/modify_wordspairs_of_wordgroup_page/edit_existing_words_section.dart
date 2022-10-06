@@ -117,7 +117,7 @@ class _ModifyExistingWordpairsSectionState
           Flexible(
             child: rowFutureBuilder<Wordpair>(
                 context,
-                db.getWordsFromGroup(widget.associatedWordgroupId),
+                db.allWordsFromTagId(widget.associatedWordgroupId),
                 _buildExistingPairsColumn),
           ),
           SizedBox(child: _buildMainButtons(), height: 50),

@@ -38,8 +38,11 @@ class Wordbase extends _$Wordbase {
   int get schemaVersion => 1;
 
   Future<List<Tag>> get allTags => select(tags).get();
-  Future<List<WordpairTag>> get allTagsByWordId => select(wordpairTags).get();
-  Future<List<WordpairTag>> get allWordsByTagId => select(wordpairTags).get();
+
+  Future<List<WordpairTag>> allWordsFromTagId(int tagId) {
+    return (select(wordpairTags)..where((tbl) => tbl.tagId.equals(tagId)))
+        .get();
+  }
 
   Future<int> insertWordpair(Wordpair wp) {
     return into(wordpairs).insert(wp);
