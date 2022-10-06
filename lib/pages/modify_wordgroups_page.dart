@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/database_utils.dart';
 import 'package:ez_rappel/page_components.dart';
 
 class ModifyWordgroupPage extends StatefulWidget {
@@ -14,7 +13,6 @@ class _ModifyWordgroupPageState extends State<ModifyWordgroupPage> {
     setState(() {});
   }
 
-  final _db = WordDatabaseHelper.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +21,9 @@ class _ModifyWordgroupPageState extends State<ModifyWordgroupPage> {
         ),
         body: Column(
           children: [
-            ModifyExistingWordgroupsSection(database: _db),
+            const ModifyExistingWordgroupsSection(),
             AddNewWordgroupSection(
-                database: _db, notifyExecution: _notifyExistingGroupsSection),
+                notifyExecution: _notifyExistingGroupsSection),
           ],
         ));
   }

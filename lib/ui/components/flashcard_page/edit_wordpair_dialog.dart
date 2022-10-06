@@ -1,6 +1,5 @@
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
-
-import 'package:ez_rappel/database_utils.dart';
 
 import 'package:ez_rappel/ui/components/modify_wordspairs_of_wordgroup_page/edit_existing_words_row.dart';
 
@@ -59,7 +58,7 @@ class _EditWordpairDialogState extends State<EditWordpairDialog> {
         TextButton(
           onPressed: () async {
             if (_status == ModifyWordpairRow.commited && _newValues != null) {
-              await WordDatabaseHelper.instance.updateWordpair(_newValues!);
+              // await WordDatabaseHelper.instance.updateWordpair(_newValues!);
               Navigator.of(context).pop(_newValues);
             }
           },

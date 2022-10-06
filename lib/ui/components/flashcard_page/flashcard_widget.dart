@@ -1,7 +1,7 @@
 import 'package:ez_rappel/algo/shuffle_wordpair_list.dart';
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:ez_rappel/ui/components/flashcard_page/edit_wordpair_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/database_utils.dart';
 
 import 'flashcard.dart';
 
@@ -77,8 +77,8 @@ class _FlashcardWidgetState extends State<FlashcardWidget> {
           Flashcard(
               onTap: _onFlashcardTap,
               word: _flipped
-                  ? _wordpairs[_index].wordTwo
-                  : _wordpairs[_index].wordOne),
+                  ? _wordpairs[_index].first
+                  : _wordpairs[_index].second),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

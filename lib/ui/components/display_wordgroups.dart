@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/database_utils.dart';
 
 Widget rowFutureBuilder<T>(BuildContext context, Future<List<dynamic>> future,
     Widget Function(List<T>) buildWidget) {
@@ -14,8 +13,8 @@ Widget rowFutureBuilder<T>(BuildContext context, Future<List<dynamic>> future,
 
 Container _styledTextField({
   double? width,
+  int? maxLength,
   required TextEditingController controller,
-  required int maxLength,
   required String labelText,
   required Color textColor,
   required void Function() onEditingComplete,
@@ -43,7 +42,6 @@ Container wordpairRowTextfield({
 }) {
   return _styledTextField(
       controller: controller,
-      maxLength: maxWordgroupNameLength,
       labelText: labelText,
       textColor: textColor,
       onEditingComplete: onEditingComplete);
@@ -51,8 +49,6 @@ Container wordpairRowTextfield({
 
 Row wordgroupEditingRow(
     {required TextEditingController nameController,
-    required TextEditingController languageOneController,
-    required TextEditingController languageTwoController,
     required void Function() handleChange,
     required Color textColor}) {
   return Row(
@@ -63,24 +59,7 @@ Row wordgroupEditingRow(
               controller: nameController,
               onEditingComplete: handleChange,
               textColor: textColor,
-              maxLength: maxWordpairWordLength,
               labelText: "Name")),
-      Expanded(
-          flex: 1,
-          child: _styledTextField(
-              controller: languageOneController,
-              onEditingComplete: handleChange,
-              textColor: textColor,
-              maxLength: languageCodeLength,
-              labelText: "lang 1")),
-      Expanded(
-          flex: 1,
-          child: _styledTextField(
-              controller: languageTwoController,
-              onEditingComplete: handleChange,
-              textColor: textColor,
-              maxLength: languageCodeLength,
-              labelText: "lang 2")),
     ],
   );
 }
@@ -91,23 +70,22 @@ mainTextButton(
       onPressed: onPressed, child: Text(buttonText, style: const TextStyle()));
 }
 
-confirmButton({ required void Function() onPressed }) {
-  return IconButton(onPressed: onPressed, icon: const Icon(
-    Icons.check_circle,
-    color: Colors.green
-  ));
+confirmButton({required void Function() onPressed}) {
+  return IconButton(
+      onPressed: onPressed,
+      icon: const Icon(Icons.check_circle, color: Colors.green));
 }
 
-cancelButton({ required void Function() onPressed }) {
-  return IconButton(onPressed: onPressed, icon: const Icon(
-    Icons.cancel,
-    color: Colors.red
-  ));
+cancelButton({required void Function() onPressed}) {
+  return IconButton(
+      onPressed: onPressed, icon: const Icon(Icons.cancel, color: Colors.red));
 }
 
-addNewButton({ required void Function() onPressed }) {
-  return IconButton(onPressed: onPressed, icon: const Icon(
-    Icons.add,
-    color: Colors.black,
-  ));
+addNewButton({required void Function() onPressed}) {
+  return IconButton(
+      onPressed: onPressed,
+      icon: const Icon(
+        Icons.add,
+        color: Colors.black,
+      ));
 }

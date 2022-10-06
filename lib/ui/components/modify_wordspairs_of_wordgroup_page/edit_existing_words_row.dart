@@ -1,5 +1,5 @@
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/database_utils.dart';
 import '../display_wordgroups.dart';
 
 class ModifyWordpairRow extends StatefulWidget {
@@ -29,8 +29,8 @@ class ModifyWordpairRow extends StatefulWidget {
 }
 
 class _ModifyWordpairRowState extends State<ModifyWordpairRow> {
-  late final _wordOneEC = TextEditingController(text: widget.oldValues.wordOne);
-  late final _wordTwoEC = TextEditingController(text: widget.oldValues.wordTwo);
+  late final _wordOneEC = TextEditingController(text: widget.oldValues.first);
+  late final _wordTwoEC = TextEditingController(text: widget.oldValues.second);
 
   int status = ModifyWordpairRow.unchanged;
   Wordpair? newValues;
@@ -47,8 +47,8 @@ class _ModifyWordpairRowState extends State<ModifyWordpairRow> {
       status = ModifyWordpairRow.unchanged; //reset to old values
       widget.notifyStatusChange(widget.wordpairId, ModifyWordpairRow.commited);
 
-      _wordOneEC.text = widget.oldValues.wordOne;
-      _wordTwoEC.text = widget.oldValues.wordTwo;
+      _wordOneEC.text = widget.oldValues.first;
+      _wordTwoEC.text = widget.oldValues.second;
     });
   }
 
@@ -68,11 +68,11 @@ class _ModifyWordpairRowState extends State<ModifyWordpairRow> {
             widget.wordpairId, ModifyWordpairRow.commited);
 
         newValues = Wordpair(
-            id: widget.wordpairId,
-            wordOne: _wordOneEC.text,
-            wordTwo: _wordTwoEC.text,
-            languageOne: widget.oldValues.languageOne,
-            languageTwo: widget.oldValues.languageTwo);
+          id: widget.wordpairId,
+          first: _wordOneEC.text,
+          second: _wordTwoEC.text,
+          user: 0,
+        );
 
         widget.commitChanges(newValues!);
       }

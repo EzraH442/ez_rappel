@@ -1,15 +1,13 @@
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
-
-import 'package:ez_rappel/database_utils.dart';
+import 'package:provider/provider.dart';
 
 import '../display_wordgroups.dart';
 import 'modify_existing_group_row.dart';
 
 class ModifyExistingWordgroupsSection extends StatefulWidget {
-  final WordDatabaseHelper database;
   const ModifyExistingWordgroupsSection({
     Key? key,
-    required this.database,
   }) : super(key: key);
 
   @override
@@ -20,7 +18,7 @@ class ModifyExistingWordgroupsSection extends StatefulWidget {
 class _ModifyExistingWordgroupsSectionState
     extends State<ModifyExistingWordgroupsSection> {
   final _modifiedIds = <int, int>{};
-  final _modifiedExistingGroups = <int, Wordgroup>{};
+  final modifiedTags = <int, Tag>{};
 
   _notifyExistingWordgroupStatusChange(int id, int status) {
     setState(() {
@@ -31,13 +29,13 @@ class _ModifyExistingWordgroupsSectionState
   _removeFromExisitingWordgroupsModified(int id) {
     setState(() {
       _modifiedIds.remove(id);
-      _modifiedExistingGroups.remove(id);
+      modifiedTags.remove(id);
     });
   }
 
-  _addToModifiedExistingGroups(Wordgroup wg) {
+  _addToModifiedExistingGroups(Tag t) {
     setState(() {
-      _modifiedExistingGroups[wg.id] = wg;
+      modifiedTags[t.id] = t;
     });
   }
 
@@ -51,8 +49,8 @@ class _ModifyExistingWordgroupsSectionState
     );
   }
 
-  Column _buildExistingGroupsColumn(List<Wordgroup> wgs) {
-    if (wgs.isEmpty) {
+  Widget _buildExistingGroupsColumn(List<Tag> tags) {
+    if (tags.isEmpty) {
       return Column(children: const [
         Padding(
           padding: EdgeInsets.all(8.0),
@@ -61,7 +59,7 @@ class _ModifyExistingWordgroupsSectionState
       ]);
     } else {
       List<Widget> widgets = [];
-      widgets.addAll(wgs.map((wg) {
+      widgets.addAll(tags.map((wg) {
         if (_modifiedIds.containsKey(wg.id)) {
           return ModifyWordgroupRow(
             wordgroupId: wg.id,
@@ -89,31 +87,33 @@ class _ModifyExistingWordgroupsSectionState
   }
 
   void _executeChanges() {
+    var db = context.read<Wordbase>();
     for (var entry in _modifiedIds.entries) {
       if (entry.value == ModifyWordgroupRow.uncommitedChanges) {
         //send double check message
       } else if (entry.value == ModifyWordgroupRow.markedForDelete) {
-        widget.database.deleteWordgroupById(entry.key);
+        // widget.database.deleteWordgroupById(entry.key);
       } else if (entry.value == ModifyWordgroupRow.commited) {
-        widget.database.updateWordgroup(_modifiedExistingGroups[entry.key]!);
+        db.updateTag(modifiedTags[entry.key]!);
       }
     }
     setState(() {
-      _modifiedExistingGroups.clear();
+      modifiedTags.clear();
       _modifiedIds.clear();
     });
   }
 
   void _resetAllChanges() {
     setState(() {
-      _modifiedExistingGroups.clear();
+      modifiedTags.clear();
       _modifiedIds.clear();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return rowFutureBuilder<Wordgroup>(context,
-        widget.database.queryAllWordgroups(), _buildExistingGroupsColumn);
+    var db = context.read<Wordbase>();
+    return rowFutureBuilder<Tags>(
+        context, db.allTags, _buildExistingGroupsColumn);
   }
 }

@@ -1,6 +1,5 @@
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
-
-import 'package:ez_rappel/database_utils.dart';
 
 import 'package:ez_rappel/pages/select_wordgroups_for_practice_page.dart';
 import 'package:ez_rappel/pages/modify_wordgroups_page.dart';
@@ -24,12 +23,12 @@ void pushModifyWordgroups(BuildContext context) {
       builder: (context) => const ModifyWordgroupPage()));
 }
 
-void pushFlashcards(BuildContext context, Set<Wordgroup> wgs) {
+void pushFlashcards(BuildContext context, Set<Tag> wgs) {
   Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (context) => FlashcardPage(selectedWordGroups: wgs)));
 }
 
-void pushTypingPractice(BuildContext context, Set<Wordgroup> wgs) {
+void pushTypingPractice(BuildContext context, Set<Tag> wgs) {
   Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => TypingPracticePage(selectedWordGroups: wgs)));
 }

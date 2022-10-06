@@ -1,5 +1,6 @@
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/database_utils.dart';
+import 'package:provider/provider.dart';
 import '../display_wordgroups.dart';
 import 'edit_existing_words_row.dart';
 
@@ -17,8 +18,6 @@ class ModifyExistingWordpairsSection extends StatefulWidget {
 
 class _ModifyExistingWordpairsSectionState
     extends State<ModifyExistingWordpairsSection> {
-  final _db = WordDatabaseHelper.instance;
-
   final _modifiedIds = <int, int>{};
   final _modifiedExistingPairs = <int, Wordpair>{};
 
@@ -63,10 +62,10 @@ class _ModifyExistingWordpairsSectionState
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                 Expanded(
-                                  child: Text(wp.wordOne),
+                                  child: Text(wp.first),
                                 ),
                                 Expanded(
-                                  child: Text(wp.wordTwo),
+                                  child: Text(wp.second),
                                 ),
                               ])),
                           IconButton(
@@ -86,13 +85,14 @@ class _ModifyExistingWordpairsSectionState
   }
 
   void _executeChanges() {
+    var db = context.read<Wordbase>();
     for (var entry in _modifiedIds.entries) {
       if (entry.value == ModifyWordpairRow.uncommitedChanges) {
         //send double check message
       } else if (entry.value == ModifyWordpairRow.markedForDelete) {
-        _db.removeWordFromGroupWithIds(entry.key, widget.associatedWordgroupId);
+        // _db.removeWordFromGroupWithIds(entry.key, widget.associatedWordgroupId);
       } else if (entry.value == ModifyWordpairRow.commited) {
-        _db.updateWordpair(_modifiedExistingPairs[entry.key]!);
+        // _db.updateWordpair(_modifiedExistingPairs[entry.key]!);
       }
     }
     setState(() {
@@ -110,13 +110,14 @@ class _ModifyExistingWordpairsSectionState
 
   @override
   Widget build(BuildContext context) {
+    var db = context.read<Wordbase>();
     return Flexible(
       child: Column(
         children: [
           Flexible(
             child: rowFutureBuilder<Wordpair>(
                 context,
-                _db.getWordsFromGroup(widget.associatedWordgroupId),
+                db.getWordsFromGroup(widget.associatedWordgroupId),
                 _buildExistingPairsColumn),
           ),
           SizedBox(child: _buildMainButtons(), height: 50),

@@ -1,9 +1,10 @@
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:io';
 
-import 'package:ez_rappel/database_utils.dart';
 import 'package:ez_rappel/file_utils.dart';
+import 'package:provider/provider.dart';
 
 import 'import_wordpair_file.dart';
 
@@ -26,7 +27,6 @@ class ImportWordpairsToWordgroupSection extends StatefulWidget {
 class _ImportWordpairsToWordgroupSectionState
     extends State<ImportWordpairsToWordgroupSection> {
   final _fileHelper = FileHelper();
-  final _db = WordDatabaseHelper.instance;
   bool _idsProvided = false;
   bool _replaceExistingWordpairs = false;
 
@@ -46,15 +46,16 @@ class _ImportWordpairsToWordgroupSectionState
   }
 
   void _addWordsToGroup() async {
+    final _db = context.read<Wordbase>();
     if (_idsProvided) {
       if (_replaceExistingWordpairs) {
-        
-      } else {
-        
-      }
+      } else {}
     } else {
-      List<int> insertedIds = await _db.insertAllWordpairs(wordPairs!);
-      _db.addAllWordpairsToGroup(insertedIds, widget.associatedWordgroupId);
+      await _db.insertMultipleWordpairs(wordPairs!);
+      _db.addMultipleWordpairToTag(wordPairs!
+          .map((wp) =>
+              WordpairTag(wpId: wp.id, tagId: widget.associatedWordgroupId))
+          .toList());
     }
     setState(() {
       wordPairs = null;

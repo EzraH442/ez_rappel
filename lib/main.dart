@@ -1,15 +1,12 @@
-import 'dart:io';
-
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
 import 'package:ez_rappel/pages/app.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
-  if (Platform.isLinux) {
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfi;
-  }
-
-  runApp(const LanguageTupleApp());
+  runApp(Provider<Wordbase>(
+    create: (context) => Wordbase(),
+    child: const LanguageTupleApp(),
+    dispose: (context, db) => db.close(),
+  ));
 }

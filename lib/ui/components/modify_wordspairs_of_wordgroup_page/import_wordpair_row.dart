@@ -1,6 +1,5 @@
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
-
-import 'package:ez_rappel/database_utils.dart';
 
 class ImportedWordpairRow extends StatelessWidget {
   final Wordpair wordpair;
@@ -12,10 +11,8 @@ class ImportedWordpairRow extends StatelessWidget {
     return Row(
       children: [
         Expanded(flex: 1, child: Text(wordpair.id.toString())),
-        Expanded(flex: 5, child: Text(wordpair.wordOne)),
-        Expanded(flex: 5, child: Text(wordpair.wordTwo)),
-        Expanded(flex: 1, child: Text(wordpair.languageOne)),
-        Expanded(flex: 1, child: Text(wordpair.languageTwo)),
+        Expanded(flex: 5, child: Text(wordpair.first)),
+        Expanded(flex: 5, child: Text(wordpair.second)),
       ],
     );
   }

@@ -1,34 +1,34 @@
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/database_utils.dart';
 import '../display_wordgroups.dart';
 
-class AddNewWordgroupRow extends StatefulWidget {
+class AddNewTag extends StatefulWidget {
   static const empty = 0;
   static const unsavedChanges = 1;
   static const saved = 2;
 
   final int rowId;
-  final void Function(Wordgroup) notifyConfirm;
-  final void Function(int, Wordgroup?) notifyCancel;
+  final Function(Tag) onConfirm;
+  final Function(int, Tag) onCancel;
 
-  const AddNewWordgroupRow(
+  const AddNewTag(
       {Key? key,
-      required this.notifyCancel,
-      required this.notifyConfirm,
-      required this.rowId})
+      required this.rowId,
+      required this.onConfirm,
+      required this.onCancel})
       : super(key: key);
 
   @override
-  State<AddNewWordgroupRow> createState() => _AddNewWordgroupRowState();
+  State<AddNewTag> createState() => _AddNewTagState();
 }
 
-class _AddNewWordgroupRowState extends State<AddNewWordgroupRow> {
+class _AddNewTagState extends State<AddNewTag> {
   final _nameEC = TextEditingController();
   final _lang1EC = TextEditingController();
   final _lang2EC = TextEditingController();
 
-  int _state = AddNewWordgroupRow.empty;
-  Wordgroup? wordGroup;
+  int _state = AddNewTag.empty;
+  Tag? tag;
 
   @override
   void dispose() {
@@ -40,29 +40,28 @@ class _AddNewWordgroupRowState extends State<AddNewWordgroupRow> {
 
   _handleChanged() {
     setState(() {
-      _state = AddNewWordgroupRow.unsavedChanges;
+      _state = AddNewTag.unsavedChanges;
     });
   }
 
   _handleConfirm() {
     setState(() {
       if (true) {
-        wordGroup = Wordgroup(
-            id: widget.rowId,
-            name: _nameEC.text,
-            languageOne: _lang1EC.text,
-            languageTwo: _lang2EC.text,
-            dateCreated: DateTime.now().toIso8601String());
+        tag = Tag(
+          user: 0, // TODO users
+          id: widget.rowId,
+          name: _nameEC.text,
+        );
 
-        _state = AddNewWordgroupRow.saved;
-        widget.notifyConfirm(wordGroup!);
+        _state = AddNewTag.saved;
+        widget.onConfirm(tag!);
       }
     });
   }
 
   _handleCancel() {
     setState(() {
-      widget.notifyCancel(widget.rowId, wordGroup);
+      widget.onCancel(widget.rowId, tag);
       _nameEC.text = "";
       _lang1EC.text = "";
       _lang2EC.text = "";
@@ -71,11 +70,11 @@ class _AddNewWordgroupRowState extends State<AddNewWordgroupRow> {
 
   Color _decideColor() {
     switch (_state) {
-      case AddNewWordgroupRow.unsavedChanges:
+      case AddNewTag.unsavedChanges:
         return Colors.yellow;
-      case AddNewWordgroupRow.saved:
+      case AddNewTag.saved:
         return Colors.green;
-      case AddNewWordgroupRow.empty:
+      case AddNewTag.empty:
         return Colors.black;
     }
     return Colors.brown;
@@ -87,8 +86,6 @@ class _AddNewWordgroupRowState extends State<AddNewWordgroupRow> {
       Flexible(
           child: wordgroupEditingRow(
               nameController: _nameEC,
-              languageOneController: _lang1EC,
-              languageTwoController: _lang2EC,
               handleChange: _handleChanged,
               textColor: _decideColor())),
       Row(

@@ -1,17 +1,15 @@
 import 'dart:collection';
 
+import 'package:ez_rappel/storage/tables.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/database_utils.dart';
 import '../display_wordgroups.dart';
 import 'add_new_group_row.dart';
 
 class AddNewWordgroupSection extends StatefulWidget {
-  final WordDatabaseHelper database;
-
   final void Function() notifyExecution;
 
-  const AddNewWordgroupSection(
-      {Key? key, required this.database, required this.notifyExecution})
+  const AddNewWordgroupSection({Key? key, required this.notifyExecution})
       : super(key: key);
 
   @override
@@ -19,24 +17,23 @@ class AddNewWordgroupSection extends StatefulWidget {
 }
 
 class _AddNewWordgroupSectionState extends State<AddNewWordgroupSection> {
-  final _groupsToAdd =
-      LinkedHashSet<Wordgroup>(equals: (p0, p1) => p0.id == p1.id);
-  final _rows = LinkedHashSet<AddNewWordgroupRow>(
-      equals: (p0, p1) => p1.rowId == p1.rowId);
+  final _tagsToAdd = LinkedHashSet<Tag>(equals: (p0, p1) => p0.id == p1.id);
+  final _rows =
+      LinkedHashSet<AddNewTag>(equals: (p0, p1) => p1.rowId == p1.rowId);
   int _nextId = 0;
 
-  _putGroup(Wordgroup wg) {
+  _putGroup(Tag t) {
     setState(() {
-      _groupsToAdd.add(wg);
+      _tagsToAdd.add(t);
     });
   }
 
-  _removeGroup(int id, Wordgroup? wg) {
+  _removeGroup(int id, Tag? t) {
     setState(() {
-      if (wg != null) {
-        _groupsToAdd.remove(wg);
+      if (t != null) {
+        _tagsToAdd.remove(t);
       }
-      AddNewWordgroupRow associatedRow =
+      AddNewTag associatedRow =
           _rows.firstWhere((element) => element.rowId == id);
       _rows.remove(associatedRow);
     });
@@ -44,21 +41,21 @@ class _AddNewWordgroupSectionState extends State<AddNewWordgroupSection> {
 
   _addNewRow() {
     setState(() {
-      _rows.add(AddNewWordgroupRow(
-          notifyCancel: _removeGroup,
-          notifyConfirm: _putGroup,
-          rowId: _nextId));
+      _rows.add(AddNewTag(
+        rowId: _nextId,
+        onConfirm: _putGroup,
+        onCancel: _removeGroup,
+      ));
       _nextId++;
     });
   }
 
   _executeChanges() async {
-    for (Wordgroup wg in _groupsToAdd) {
-      await widget.database.insertWordgroup(wg);
-    }
+    final database = context.read<Wordbase>();
+    database.insertMultipleTags(_tagsToAdd.toList());
     setState(() {
       _rows.clear();
-      _groupsToAdd.clear();
+      _tagsToAdd.clear();
       widget.notifyExecution();
     });
   }
@@ -66,7 +63,7 @@ class _AddNewWordgroupSectionState extends State<AddNewWordgroupSection> {
   _resetAllChanges() {
     setState(() {
       _rows.clear();
-      _groupsToAdd.clear();
+      _tagsToAdd.clear();
     });
   }
 

@@ -1,5 +1,5 @@
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
-import 'package:ez_rappel/database_utils.dart';
 import '../display_wordgroups.dart';
 
 class ModifyWordgroupRow extends StatefulWidget {
@@ -9,11 +9,11 @@ class ModifyWordgroupRow extends StatefulWidget {
   static const int markedForDelete = 3;
 
   final int wordgroupId;
-  final Wordgroup oldValues;
+  final Tag oldValues;
 
   final void Function(int id, int newStatus) notifyStatusChange;
   final void Function(int id) removeFromModified;
-  final void Function(Wordgroup) commitChanges;
+  final void Function(Tag) commitChanges;
 
   const ModifyWordgroupRow({
     Key? key,
@@ -30,19 +30,13 @@ class ModifyWordgroupRow extends StatefulWidget {
 
 class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
   late final _nameEC = TextEditingController(text: widget.oldValues.name);
-  late final _lang1EC =
-      TextEditingController(text: widget.oldValues.languageOne);
-  late final _lang2EC =
-      TextEditingController(text: widget.oldValues.languageTwo);
 
   int status = ModifyWordgroupRow.unchanged;
-  Wordgroup? newValues;
+  Tag? newValues;
 
   @override
   void dispose() {
     _nameEC.dispose();
-    _lang1EC.dispose();
-    _lang2EC.dispose();
     super.dispose();
   }
 
@@ -53,8 +47,6 @@ class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
           widget.wordgroupId, ModifyWordgroupRow.commited);
 
       _nameEC.text = widget.oldValues.name;
-      _lang1EC.text = widget.oldValues.languageOne;
-      _lang2EC.text = widget.oldValues.languageTwo;
     });
   }
 
@@ -73,12 +65,11 @@ class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
         widget.notifyStatusChange(
             widget.wordgroupId, ModifyWordgroupRow.commited);
 
-        newValues = Wordgroup(
-            id: widget.wordgroupId,
-            name: _nameEC.text,
-            languageOne: _lang1EC.text,
-            languageTwo: _lang2EC.text,
-            dateCreated: DateTime.now().toIso8601String());
+        newValues = Tag(
+          id: widget.wordgroupId,
+          name: _nameEC.text,
+          user: 0,
+        );
 
         widget.commitChanges(newValues!);
       }
@@ -120,8 +111,6 @@ class _ModifyWordgroupRowState extends State<ModifyWordgroupRow> {
       Flexible(
           child: wordgroupEditingRow(
               nameController: _nameEC,
-              languageOneController: _lang1EC,
-              languageTwoController: _lang2EC,
               handleChange: _handleChanged,
               textColor: _decideColor())),
       Row(

@@ -20,11 +20,13 @@ class _TypePracticeWidgetState extends State<TypePracticeWidget> {
 
   final _tec = TextEditingController();
   late final List<Wordpair> _wordpairs = List.from(widget.wordpairs);
+  final List<int> correctIds = [];
+  final List<int> incorrectIds = [];
 
   int _index = 0;
+  int _correct = 0;
   bool _swapOrder = false;
   bool _submitted = false;
-  int _correct = 0;
   int _total = 0;
   int _status = unsubmitted;
 
@@ -43,8 +45,11 @@ class _TypePracticeWidgetState extends State<TypePracticeWidget> {
         _submitted = true;
         _status = newStatus;
         _total++;
-        if ((_status == correct)) {
+        if (_status == correct) {
+          correctIds.add(_wordpairs[_index].id);
           _correct++;
+        } else {
+          incorrectIds.add(_wordpairs[_index].id);
         }
       });
     } else {

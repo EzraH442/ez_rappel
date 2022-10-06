@@ -1,9 +1,8 @@
 import 'dart:io';
 import 'dart:async';
 
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:file_picker/file_picker.dart';
-
-import 'package:ez_rappel/database_utils.dart';
 
 import 'file_parsers.dart';
 
