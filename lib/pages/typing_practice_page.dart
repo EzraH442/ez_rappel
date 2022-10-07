@@ -1,12 +1,14 @@
+import 'package:ez_rappel/main.dart';
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
 
-import 'package:ez_rappel/database_utils.dart';
 import 'package:ez_rappel/page_components.dart';
+import 'package:provider/provider.dart';
 
 class TypingPracticePage extends StatefulWidget {
-  final Set<Wordgroup> selectedWordGroups;
+  final Set<Tag> selectedTags;
 
-  const TypingPracticePage({Key? key, required this.selectedWordGroups})
+  const TypingPracticePage({Key? key, required this.selectedTags})
       : super(key: key);
 
   @override
@@ -14,12 +16,13 @@ class TypingPracticePage extends StatefulWidget {
 }
 
 class _TypingPracticePageState extends State<TypingPracticePage> {
-  Future<List<Wordpair>> _getWordsFromMultipleGroups(
-      Set<Wordgroup> wgs, WordDatabaseHelper db) async {
-    List<Wordpair> ret = [];
+  Future<List<WordpairTag>> _getWordsFromMultipleGroups(Set<Tag> tags) async {
+    List<WordpairTag> ret = [];
 
-    for (Wordgroup wg in wgs) {
-      ret.addAll(await db.getWordsFromGroup(wg.id));
+    final db = context.read<AppContext>().db;
+
+    for (Tag t in tags) {
+      ret.addAll(await db.allWordsFromTagId(t.id));
     }
 
     return ret;
@@ -27,15 +30,13 @@ class _TypingPracticePageState extends State<TypingPracticePage> {
 
   @override
   Widget build(BuildContext context) {
-    WordDatabaseHelper db = WordDatabaseHelper.instance;
-
     return Scaffold(
         appBar: AppBar(
           title: const Text("Typing Practice"),
         ),
         body: rowFutureBuilder<Wordpair>(
             context,
-            _getWordsFromMultipleGroups(widget.selectedWordGroups, db),
+            _getWordsFromMultipleGroups(widget.selectedTags),
             ((wps) => TypePracticeWidget(wordpairs: wps))));
   }
 }

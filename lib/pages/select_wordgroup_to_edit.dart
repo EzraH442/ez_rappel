@@ -1,8 +1,10 @@
+import 'package:ez_rappel/main.dart';
+import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ez_rappel/ui/routes/primary_routes.dart' as routes;
 import 'package:ez_rappel/page_components.dart';
-import 'package:ez_rappel/database_utils.dart';
+import 'package:provider/provider.dart';
 
 class _NameIdPair {
   final String name;
@@ -29,7 +31,6 @@ class ModifyWordsPage extends StatefulWidget {
 }
 
 class _ModifyWordsPageState extends State<ModifyWordsPage> {
-  final _db = WordDatabaseHelper.instance;
   _NameIdPair? _value;
 
   void onChanged(value) {
@@ -43,11 +44,11 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
     routes.pushModifyWordpairsOfGroup(context, _value!.id);
   }
 
-  Widget _buildColumn(List<Wordgroup> wgs) {
-    return wgs.isEmpty
+  Widget _buildColumn(List<Tag> tags) {
+    return tags.isEmpty
         ? const Text("Create your first wordgroup before continuing")
         : DropdownButton(
-            items: wgs
+            items: tags
                 .map((e) => DropdownMenuItem(
                       child: Text(e.name),
                       value: _NameIdPair(id: e.id, name: e.name),
@@ -62,6 +63,8 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
   Widget build(BuildContext context) {
     bool isDisabled = (_value == null);
 
+    final db = context.read<AppContext>().db;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Select wordgroup to edit"),
@@ -69,8 +72,7 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
       body: Center(
         child: Card(
             child: Column(children: [
-          rowFutureBuilder<Wordgroup>(
-              context, _db.queryAllWordgroups(), _buildColumn),
+          rowFutureBuilder<Tag>(context, db.allTags, _buildColumn),
           isDisabled
               ? const Padding(
                   padding: EdgeInsets.all(8.0),

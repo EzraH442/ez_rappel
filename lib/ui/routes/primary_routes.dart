@@ -25,12 +25,12 @@ void pushModifyWordgroups(BuildContext context) {
 
 void pushFlashcards(BuildContext context, Set<Tag> wgs) {
   Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (context) => FlashcardPage(selectedWordGroups: wgs)));
+      builder: (context) => FlashcardPage(selectedTags: wgs)));
 }
 
 void pushTypingPractice(BuildContext context, Set<Tag> wgs) {
   Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => TypingPracticePage(selectedWordGroups: wgs)));
+      builder: (context) => TypingPracticePage(selectedTags: wgs)));
 }
 
 void pushModifyWordpairsOfGroup(BuildContext context, int wgId) {

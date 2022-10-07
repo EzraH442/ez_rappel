@@ -1,8 +1,10 @@
+import 'package:ez_rappel/main.dart';
+import 'package:ez_rappel/storage/tables.dart';
+import 'package:ez_rappel/ui/components/display_wordgroups.dart';
 import 'package:flutter/material.dart';
 
-import 'package:ez_rappel/database_utils.dart';
 import 'package:ez_rappel/ui/routes/primary_routes.dart' as routes;
-import 'package:ez_rappel/page_components.dart' as components;
+import 'package:provider/provider.dart';
 
 class PracticePage extends StatefulWidget {
   const PracticePage({Key? key}) : super(key: key);
@@ -12,18 +14,17 @@ class PracticePage extends StatefulWidget {
 }
 
 class _PracticePageState extends State<PracticePage> {
-  final _db = WordDatabaseHelper.instance;
-  final _selectedForPractice = <Wordgroup>{};
+  final _selectedForPractice = <Tag>{};
 
-  ListTile _buildWordgroupRow(List<Wordgroup> wgs, int index) {
-    final bool isSelected = _selectedForPractice.contains(wgs[index]);
+  ListTile _buildWordgroupRow(List<Tag> tags, int index) {
+    final bool isSelected = _selectedForPractice.contains(tags[index]);
 
     IconButton selectForPracticeIcon = IconButton(
         onPressed: () {
           setState(() {
             isSelected
-                ? _selectedForPractice.remove(wgs[index])
-                : _selectedForPractice.add(wgs[index]);
+                ? _selectedForPractice.remove(tags[index])
+                : _selectedForPractice.add(tags[index]);
           });
         },
         icon: Icon(
@@ -33,12 +34,12 @@ class _PracticePageState extends State<PracticePage> {
         ));
 
     return ListTile(
-      title: Text(wgs[index].name),
+      title: Text(tags[index].name),
       trailing: selectForPracticeIcon,
     );
   }
 
-  Column _buildWordgroupColumn(List<Wordgroup> results) {
+  Column _buildWordgroupColumn(List<Tag> results) {
     return Column(children: [
       const Text("Word Groups:"),
       ListView.builder(
@@ -72,13 +73,14 @@ class _PracticePageState extends State<PracticePage> {
     ]);
   }
 
-  Scaffold _displayScaffold(BuildContext context, WordDatabaseHelper db) =>
-      Scaffold(
-        appBar: AppBar(title: const Text("Practice Words")),
-        body: components.rowFutureBuilder(
-            context, db.queryAllWordgroups(), _buildWordgroupColumn),
-      );
+  Scaffold _displayScaffold(BuildContext context) {
+    final db = context.read<AppContext>().db;
+    return Scaffold(
+      appBar: AppBar(title: const Text("Practice Words")),
+      body: rowFutureBuilder(context, db.allTags, _buildWordgroupColumn),
+    );
+  }
 
   @override
-  Widget build(BuildContext context) => _displayScaffold(context, _db);
+  Widget build(BuildContext context) => _displayScaffold(context);
 }

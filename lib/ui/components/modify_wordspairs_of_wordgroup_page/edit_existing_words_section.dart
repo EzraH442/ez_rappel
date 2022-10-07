@@ -1,5 +1,6 @@
 import 'package:ez_rappel/main.dart';
 import 'package:ez_rappel/storage/tables.dart';
+import 'package:ez_rappel/ui/components/modify/button_row.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../display_wordgroups.dart';
@@ -73,7 +74,7 @@ class _ModifyExistingWordpairsSectionState
                               icon: const Icon(Icons.edit),
                               onPressed: () =>
                                   _notifyExistingWordpairStatusChange(
-                                      wp.id, ModifyWordpairRow.unchanged)),
+                                      wp.id, EditRow.unchanged)),
                         ])))
             .toList());
   }
@@ -88,11 +89,11 @@ class _ModifyExistingWordpairsSectionState
   void _executeChanges() {
     final db = context.read<AppContext>().db;
     for (var entry in _modifiedIdsStatus.entries) {
-      if (entry.value == ModifyWordpairRow.uncommitedChanges) {
+      if (entry.value == EditRow.uncommitedChanges) {
         //send double check message
-      } else if (entry.value == ModifyWordpairRow.markedForDelete) {
+      } else if (entry.value == EditRow.markedForDelete) {
         // _db.removeWordFromGroupWithIds(entry.key, widget.associatedWordgroupId);
-      } else if (entry.value == ModifyWordpairRow.commited) {
+      } else if (entry.value == EditRow.commited) {
         // _db.updateWordpair(_modifiedExistingPairs[entry.key]!);
       }
     }
