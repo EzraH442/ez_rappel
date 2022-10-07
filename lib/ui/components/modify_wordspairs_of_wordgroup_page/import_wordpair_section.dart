@@ -1,3 +1,4 @@
+import 'package:ez_rappel/main.dart';
 import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +47,7 @@ class _ImportWordpairsToWordgroupSectionState
   }
 
   void _addWordsToGroup() async {
-    final _db = context.read<Wordbase>();
+    final _db = context.read<AppContext>().db;
     if (_idsProvided) {
       if (_replaceExistingWordpairs) {
       } else {}

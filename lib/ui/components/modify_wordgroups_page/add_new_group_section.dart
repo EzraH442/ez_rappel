@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:ez_rappel/main.dart';
 import 'package:ez_rappel/storage/tables.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,8 @@ class _AddNewWordgroupSectionState extends State<AddNewWordgroupSection> {
   }
 
   _executeChanges() async {
-    final database = context.read<Wordbase>();
-    database.insertMultipleTags(_tagsToAdd.toList());
+    final db = context.read<AppContext>().db;
+    db.insertMultipleTags(_tagsToAdd.toList());
     setState(() {
       _rows.clear();
       _tagsToAdd.clear();
@@ -84,9 +85,9 @@ class _AddNewWordgroupSectionState extends State<AddNewWordgroupSection> {
   Row _buildMainButtons() {
     return Row(
       children: [
-        addNewButton(onPressed: _addNewRow),
-        confirmButton(onPressed: _executeChanges),
-        cancelButton(onPressed: _resetAllChanges)
+        AddNewButton(onPressed: _addNewRow),
+        ConfirmButton(onPressed: _executeChanges),
+        CancelButton(onPressed: _resetAllChanges)
       ],
       mainAxisAlignment: MainAxisAlignment.end,
     );

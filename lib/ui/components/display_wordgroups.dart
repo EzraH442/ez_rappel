@@ -11,7 +11,7 @@ Widget rowFutureBuilder<T>(BuildContext context, Future<List<dynamic>> future,
             ));
 }
 
-Container _styledTextField({
+Container _StyledTextField({
   double? width,
   int? maxLength,
   required TextEditingController controller,
@@ -34,20 +34,20 @@ Container _styledTextField({
   );
 }
 
-Container wordpairRowTextfield({
+Container WordpairRowTextfield({
   required TextEditingController controller,
   required Color textColor,
   required String labelText,
   required void Function() onEditingComplete,
 }) {
-  return _styledTextField(
+  return _StyledTextField(
       controller: controller,
       labelText: labelText,
       textColor: textColor,
       onEditingComplete: onEditingComplete);
 }
 
-Row wordgroupEditingRow(
+Row TagEditingRow(
     {required TextEditingController nameController,
     required void Function() handleChange,
     required Color textColor}) {
@@ -55,7 +55,7 @@ Row wordgroupEditingRow(
     children: [
       Expanded(
           flex: 3,
-          child: _styledTextField(
+          child: _StyledTextField(
               controller: nameController,
               onEditingComplete: handleChange,
               textColor: textColor,
@@ -64,24 +64,24 @@ Row wordgroupEditingRow(
   );
 }
 
-mainTextButton(
+MainTextButton(
     {required void Function() onPressed, required String buttonText}) {
   return TextButton(
       onPressed: onPressed, child: Text(buttonText, style: const TextStyle()));
 }
 
-confirmButton({required void Function() onPressed}) {
+ConfirmButton({required void Function() onPressed}) {
   return IconButton(
       onPressed: onPressed,
       icon: const Icon(Icons.check_circle, color: Colors.green));
 }
 
-cancelButton({required void Function() onPressed}) {
+CancelButton({required void Function() onPressed}) {
   return IconButton(
       onPressed: onPressed, icon: const Icon(Icons.cancel, color: Colors.red));
 }
 
-addNewButton({required void Function() onPressed}) {
+AddNewButton({required void Function() onPressed}) {
   return IconButton(
       onPressed: onPressed,
       icon: const Icon(

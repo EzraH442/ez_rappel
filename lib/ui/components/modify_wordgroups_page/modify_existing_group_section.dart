@@ -1,3 +1,4 @@
+import 'package:ez_rappel/main.dart';
 import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,18 +18,18 @@ class ModifyExistingWordgroupsSection extends StatefulWidget {
 
 class _ModifyExistingWordgroupsSectionState
     extends State<ModifyExistingWordgroupsSection> {
-  final _modifiedIds = <int, int>{};
+  final _modifiedIdsStatus = <int, int>{};
   final modifiedTags = <int, Tag>{};
 
   _notifyExistingWordgroupStatusChange(int id, int status) {
     setState(() {
-      _modifiedIds[id] = status;
+      _modifiedIdsStatus[id] = status;
     });
   }
 
   _removeFromExisitingWordgroupsModified(int id) {
     setState(() {
-      _modifiedIds.remove(id);
+      _modifiedIdsStatus.remove(id);
       modifiedTags.remove(id);
     });
   }
@@ -42,8 +43,8 @@ class _ModifyExistingWordgroupsSectionState
   Row _buildMainButtons() {
     return Row(
       children: [
-        confirmButton(onPressed: _executeChanges),
-        cancelButton(onPressed: _resetAllChanges),
+        ConfirmButton(onPressed: _executeChanges),
+        CancelButton(onPressed: _resetAllChanges),
       ],
       mainAxisAlignment: MainAxisAlignment.end,
     );
@@ -60,7 +61,7 @@ class _ModifyExistingWordgroupsSectionState
     } else {
       List<Widget> widgets = [];
       widgets.addAll(tags.map((wg) {
-        if (_modifiedIds.containsKey(wg.id)) {
+        if (_modifiedIdsStatus.containsKey(wg.id)) {
           return ModifyWordgroupRow(
             wordgroupId: wg.id,
             oldValues: wg,
@@ -87,8 +88,8 @@ class _ModifyExistingWordgroupsSectionState
   }
 
   void _executeChanges() {
-    var db = context.read<Wordbase>();
-    for (var entry in _modifiedIds.entries) {
+    final db = context.read<AppContext>().db;
+    for (var entry in _modifiedIdsStatus.entries) {
       if (entry.value == ModifyWordgroupRow.uncommitedChanges) {
         //send double check message
       } else if (entry.value == ModifyWordgroupRow.markedForDelete) {
@@ -99,20 +100,20 @@ class _ModifyExistingWordgroupsSectionState
     }
     setState(() {
       modifiedTags.clear();
-      _modifiedIds.clear();
+      _modifiedIdsStatus.clear();
     });
   }
 
   void _resetAllChanges() {
     setState(() {
       modifiedTags.clear();
-      _modifiedIds.clear();
+      _modifiedIdsStatus.clear();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var db = context.read<Wordbase>();
+    final db = context.read<AppContext>().db;
     return rowFutureBuilder<Tag>(
         context, db.allTags, _buildExistingGroupsColumn);
   }

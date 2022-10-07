@@ -1,3 +1,4 @@
+import 'package:ez_rappel/main.dart';
 import 'package:ez_rappel/storage/tables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,18 +19,18 @@ class ModifyExistingWordpairsSection extends StatefulWidget {
 
 class _ModifyExistingWordpairsSectionState
     extends State<ModifyExistingWordpairsSection> {
-  final _modifiedIds = <int, int>{};
+  final _modifiedIdsStatus = <int, int>{};
   final _modifiedExistingPairs = <int, Wordpair>{};
 
   _notifyExistingWordpairStatusChange(int id, int status) {
     setState(() {
-      _modifiedIds[id] = status;
+      _modifiedIdsStatus[id] = status;
     });
   }
 
   _removeFromExisitingWordpairsModified(int id) {
     setState(() {
-      _modifiedIds.remove(id);
+      _modifiedIdsStatus.remove(id);
       _modifiedExistingPairs.remove(id);
     });
   }
@@ -44,9 +45,9 @@ class _ModifyExistingWordpairsSectionState
     return ListView(
         controller: ScrollController(),
         children: wps
-            .map((wp) => _modifiedIds.containsKey(wp.id)
+            .map((wp) => _modifiedIdsStatus.containsKey(wp.id)
                 ? ModifyWordpairRow(
-                    wordpairId: wp.id,
+                    id: wp.id,
                     oldValues: wp,
                     notifyStatusChange: _notifyExistingWordpairStatusChange,
                     removeFromModified: _removeFromExisitingWordpairsModified,
@@ -79,14 +80,14 @@ class _ModifyExistingWordpairsSectionState
 
   Row _buildMainButtons() {
     return Row(children: [
-      mainTextButton(onPressed: _executeChanges, buttonText: "Confirm"),
-      mainTextButton(onPressed: _resetAllChanges, buttonText: "Cancel"),
+      MainTextButton(onPressed: _executeChanges, buttonText: "Confirm"),
+      MainTextButton(onPressed: _resetAllChanges, buttonText: "Cancel"),
     ]);
   }
 
   void _executeChanges() {
-    var db = context.read<Wordbase>();
-    for (var entry in _modifiedIds.entries) {
+    final db = context.read<AppContext>().db;
+    for (var entry in _modifiedIdsStatus.entries) {
       if (entry.value == ModifyWordpairRow.uncommitedChanges) {
         //send double check message
       } else if (entry.value == ModifyWordpairRow.markedForDelete) {
@@ -97,20 +98,20 @@ class _ModifyExistingWordpairsSectionState
     }
     setState(() {
       _modifiedExistingPairs.clear();
-      _modifiedIds.clear();
+      _modifiedIdsStatus.clear();
     });
   }
 
   void _resetAllChanges() {
     setState(() {
       _modifiedExistingPairs.clear();
-      _modifiedIds.clear();
+      _modifiedIdsStatus.clear();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var db = context.read<Wordbase>();
+    final db = context.read<AppContext>().db;
     return Flexible(
       child: Column(
         children: [

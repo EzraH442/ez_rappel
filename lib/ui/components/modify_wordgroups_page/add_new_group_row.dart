@@ -84,7 +84,7 @@ class _AddNewTagState extends State<AddNewTag> {
   Widget build(BuildContext context) {
     return Row(children: [
       Flexible(
-          child: wordgroupEditingRow(
+          child: TagEditingRow(
               nameController: _nameEC,
               handleChange: _handleChanged,
               textColor: _decideColor())),
