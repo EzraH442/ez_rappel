@@ -7,28 +7,27 @@ import 'package:provider/provider.dart';
 import '../display_wordgroups.dart';
 import 'modify_existing_group_row.dart';
 
-class ModifyExistingWordgroupsSection extends StatefulWidget {
-  const ModifyExistingWordgroupsSection({
+class ModifyExistingTagsSection extends StatefulWidget {
+  const ModifyExistingTagsSection({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ModifyExistingWordgroupsSection> createState() =>
-      _ModifyExistingWordgroupsSectionState();
+  State<ModifyExistingTagsSection> createState() =>
+      _ModifyExistingTagsSectionState();
 }
 
-class _ModifyExistingWordgroupsSectionState
-    extends State<ModifyExistingWordgroupsSection> {
+class _ModifyExistingTagsSectionState extends State<ModifyExistingTagsSection> {
   final _modifiedIdsStatus = <int, int>{};
   final modifiedTags = <int, Tag>{};
 
-  _notifyExistingWordgroupStatusChange(int id, int status) {
+  _notifyExistingTagStatusChange(int id, int status) {
     setState(() {
       _modifiedIdsStatus[id] = status;
     });
   }
 
-  _removeFromExisitingWordgroupsModified(int id) {
+  _removeFromExisitingTagsModified(int id) {
     setState(() {
       _modifiedIdsStatus.remove(id);
       modifiedTags.remove(id);
@@ -56,18 +55,18 @@ class _ModifyExistingWordgroupsSectionState
       return Column(children: const [
         Padding(
           padding: EdgeInsets.all(8.0),
-          child: Text("Add your first wordgroup below!"),
+          child: Text("Add your first tag below!"),
         )
       ]);
     } else {
       List<Widget> widgets = [];
       widgets.addAll(tags.map((wg) {
         if (_modifiedIdsStatus.containsKey(wg.id)) {
-          return ModifyWordgroupRow(
+          return ModifyTagpRow(
             id: wg.id,
             oldValues: wg,
-            notifyStatusChange: _notifyExistingWordgroupStatusChange,
-            removeFromModified: _removeFromExisitingWordgroupsModified,
+            notifyStatusChange: _notifyExistingTagStatusChange,
+            removeFromModified: _removeFromExisitingTagsModified,
             commitChanges: _addToModifiedExistingGroups,
           );
         } else {
@@ -75,8 +74,8 @@ class _ModifyExistingWordgroupsSectionState
             leading: Text(wg.name),
             trailing: IconButton(
               icon: const Icon(Icons.edit),
-              onPressed: () => _notifyExistingWordgroupStatusChange(
-                  wg.id, EditRow.unchanged),
+              onPressed: () =>
+                  _notifyExistingTagStatusChange(wg.id, EditRow.unchanged),
             ),
           );
         }

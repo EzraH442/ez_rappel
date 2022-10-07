@@ -46,7 +46,7 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
 
   Widget _buildColumn(List<Tag> tags) {
     return tags.isEmpty
-        ? const Text("Create your first wordgroup before continuing")
+        ? const Text("Create your first tag before continuing")
         : DropdownButton(
             items: tags
                 .map((e) => DropdownMenuItem(
@@ -67,7 +67,7 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Select wordgroup to edit"),
+        title: const Text("Select tag to edit"),
       ),
       body: Center(
         child: Card(
@@ -76,7 +76,7 @@ class _ModifyWordsPageState extends State<ModifyWordsPage> {
           isDisabled
               ? const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Please select a wordgroup"),
+                  child: Text("Please select a tag"),
                 )
               : TextButton(
                   onPressed: onButtonPressed, child: const Text("Edit"))

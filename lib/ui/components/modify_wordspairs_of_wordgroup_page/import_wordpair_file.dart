@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'import_wordpair_row.dart';
 
 class ImportedWordpairsSection extends StatelessWidget {
-  final int associatedWordgroupId;
+  final int tagId;
   final List<Wordpair> wordPairs;
 
   const ImportedWordpairsSection(
-      {Key? key, required this.associatedWordgroupId, required this.wordPairs})
+      {Key? key, required this.tagId, required this.wordPairs})
       : super(key: key);
 
   @override

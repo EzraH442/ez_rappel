@@ -44,10 +44,10 @@ class WordpairFileParser {
   }
 }
 
-class WordgroupFileParser {
+class TagFileParser {
   File file;
 
-  WordgroupFileParser(this.file);
+  TagFileParser(this.file);
 
   Future<List<Tag>> parse() async {
     final contents = await file.readAsLines();

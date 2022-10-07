@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ez_rappel/page_components.dart';
 
-class ModifyWordgroupPage extends StatefulWidget {
-  const ModifyWordgroupPage({Key? key}) : super(key: key);
+class ModifyTagPage extends StatefulWidget {
+  const ModifyTagPage({Key? key}) : super(key: key);
 
   @override
-  State<ModifyWordgroupPage> createState() => _ModifyWordgroupPageState();
+  State<ModifyTagPage> createState() => _ModifyTagPageState();
 }
 
-class _ModifyWordgroupPageState extends State<ModifyWordgroupPage> {
+class _ModifyTagPageState extends State<ModifyTagPage> {
   void _notifyExistingGroupsSection() {
     setState(() {});
   }
@@ -17,13 +17,12 @@ class _ModifyWordgroupPageState extends State<ModifyWordgroupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Modify Wordgroups"),
+          title: const Text("Modify Tags"),
         ),
         body: Column(
           children: [
-            const ModifyExistingWordgroupsSection(),
-            AddNewWordgroupSection(
-                notifyExecution: _notifyExistingGroupsSection),
+            const ModifyExistingTagsSection(),
+            AddNewTagSection(notifyExecution: _notifyExistingGroupsSection),
           ],
         ));
   }

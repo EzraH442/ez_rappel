@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 import '../display_wordgroups.dart';
 import 'add_new_group_row.dart';
 
-class AddNewWordgroupSection extends StatefulWidget {
+class AddNewTagSection extends StatefulWidget {
   final void Function() notifyExecution;
 
-  const AddNewWordgroupSection({Key? key, required this.notifyExecution})
+  const AddNewTagSection({Key? key, required this.notifyExecution})
       : super(key: key);
 
   @override
-  State<AddNewWordgroupSection> createState() => _AddNewWordgroupSectionState();
+  State<AddNewTagSection> createState() => _AddNewTagSectionState();
 }
 
-class _AddNewWordgroupSectionState extends State<AddNewWordgroupSection> {
+class _AddNewTagSectionState extends State<AddNewTagSection> {
   final _tagsToAdd = LinkedHashSet<Tag>(equals: (p0, p1) => p0.id == p1.id);
   final _rows =
       LinkedHashSet<AddNewTag>(equals: (p0, p1) => p1.rowId == p1.rowId);

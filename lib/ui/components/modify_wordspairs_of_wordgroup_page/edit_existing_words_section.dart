@@ -7,10 +7,10 @@ import '../display_wordgroups.dart';
 import 'edit_existing_words_row.dart';
 
 class ModifyExistingWordpairsSection extends StatefulWidget {
-  final int associatedWordgroupId;
+  final int associatedTagId;
   const ModifyExistingWordpairsSection({
     Key? key,
-    required this.associatedWordgroupId,
+    required this.associatedTagId,
   }) : super(key: key);
 
   @override
@@ -119,7 +119,7 @@ class _ModifyExistingWordpairsSectionState
           Flexible(
             child: rowFutureBuilder<Wordpair>(
                 context,
-                db.allWordsFromTagId(widget.associatedWordgroupId),
+                db.allWordsFromTagId(widget.associatedTagId),
                 _buildExistingPairsColumn),
           ),
           SizedBox(child: _buildMainButtons(), height: 50),

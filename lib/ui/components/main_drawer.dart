@@ -17,10 +17,10 @@ Drawer mainDrawer(context) => Drawer(
             },
           ),
           ListTile(
-            title: const Text("Modify Wordgroups"),
+            title: const Text("Modify Tags"),
             onTap: () {
               Navigator.pop(context);
-              routes.pushModifyWordgroups(context);
+              routes.pushModifyTags(context);
             },
           ),
           ListTile(

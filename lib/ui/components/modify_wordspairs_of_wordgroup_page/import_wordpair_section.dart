@@ -9,24 +9,22 @@ import 'package:provider/provider.dart';
 
 import 'import_wordpair_file.dart';
 
-class ImportWordpairsToWordgroupSection extends StatefulWidget {
-  final int associatedWordgroupId;
+class ImportWordpairsToTagSection extends StatefulWidget {
+  final int tagId;
 
   final void Function() notifyWordsAdded;
 
-  const ImportWordpairsToWordgroupSection(
-      {Key? key,
-      required this.associatedWordgroupId,
-      required this.notifyWordsAdded})
+  const ImportWordpairsToTagSection(
+      {Key? key, required this.tagId, required this.notifyWordsAdded})
       : super(key: key);
 
   @override
-  State<ImportWordpairsToWordgroupSection> createState() =>
-      _ImportWordpairsToWordgroupSectionState();
+  State<ImportWordpairsToTagSection> createState() =>
+      _ImportWordpairsToTagSectionState();
 }
 
-class _ImportWordpairsToWordgroupSectionState
-    extends State<ImportWordpairsToWordgroupSection> {
+class _ImportWordpairsToTagSectionState
+    extends State<ImportWordpairsToTagSection> {
   final _fileHelper = FileHelper();
   bool _idsProvided = false;
   bool _replaceExistingWordpairs = false;
@@ -54,8 +52,7 @@ class _ImportWordpairsToWordgroupSectionState
     } else {
       await _db.insertMultipleWordpairs(wordPairs!);
       _db.addMultipleWordpairToTag(wordPairs!
-          .map((wp) =>
-              WordpairTag(wpId: wp.id, tagId: widget.associatedWordgroupId))
+          .map((wp) => WordpairTag(wpId: wp.id, tagId: widget.tagId))
           .toList());
     }
     setState(() {
@@ -118,8 +115,7 @@ class _ImportWordpairsToWordgroupSectionState
       children: [
         _hasSelectedFile
             ? ImportedWordpairsSection(
-                associatedWordgroupId: widget.associatedWordgroupId,
-                wordPairs: wordPairs!)
+                tagId: widget.tagId, wordPairs: wordPairs!)
             : const Text("No file selected"),
         _buildButtonRow()
       ],

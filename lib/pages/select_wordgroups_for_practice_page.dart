@@ -16,7 +16,7 @@ class PracticePage extends StatefulWidget {
 class _PracticePageState extends State<PracticePage> {
   final _selectedForPractice = <Tag>{};
 
-  ListTile _buildWordgroupRow(List<Tag> tags, int index) {
+  ListTile _buildTagRow(List<Tag> tags, int index) {
     final bool isSelected = _selectedForPractice.contains(tags[index]);
 
     IconButton selectForPracticeIcon = IconButton(
@@ -39,7 +39,7 @@ class _PracticePageState extends State<PracticePage> {
     );
   }
 
-  Column _buildWordgroupColumn(List<Tag> results) {
+  Column _buildTagColumn(List<Tag> results) {
     return Column(children: [
       const Text("Word Groups:"),
       ListView.builder(
@@ -47,7 +47,7 @@ class _PracticePageState extends State<PracticePage> {
           itemCount: results.length,
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          itemBuilder: (_, int i) => _buildWordgroupRow(results, i)),
+          itemBuilder: (_, int i) => _buildTagRow(results, i)),
       Row(
         children: [
           TextButton(
@@ -77,7 +77,7 @@ class _PracticePageState extends State<PracticePage> {
     final db = context.read<AppContext>().db;
     return Scaffold(
       appBar: AppBar(title: const Text("Practice Words")),
-      body: rowFutureBuilder(context, db.allTags, _buildWordgroupColumn),
+      body: rowFutureBuilder(context, db.allTags, _buildTagColumn),
     );
   }
 

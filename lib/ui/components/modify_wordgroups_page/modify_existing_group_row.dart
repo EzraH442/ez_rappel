@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../display_wordgroups.dart';
 import '../modify/button_row.dart';
 
-class ModifyWordgroupRow extends EditRow<Tag> {
-  const ModifyWordgroupRow({
+class ModifyTagpRow extends EditRow<Tag> {
+  const ModifyTagpRow({
     Key? key,
     required id,
     required oldValues,
@@ -20,10 +20,10 @@ class ModifyWordgroupRow extends EditRow<Tag> {
             commitChanges: commitChanges);
 
   @override
-  State<ModifyWordgroupRow> createState() => _ModifyWordgroupRowState();
+  State<ModifyTagpRow> createState() => _ModifyTagRowState();
 }
 
-class _ModifyWordgroupRowState extends EditRowState<ModifyWordgroupRow> {
+class _ModifyTagRowState extends EditRowState<ModifyTagpRow> {
   late final _nameEC = TextEditingController(text: widget.oldValues.name);
   Tag? newValues;
 

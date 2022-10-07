@@ -18,9 +18,9 @@ void pushModifyWordpairs(BuildContext context) {
       MaterialPageRoute<void>(builder: (context) => const ModifyWordsPage()));
 }
 
-void pushModifyWordgroups(BuildContext context) {
-  Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (context) => const ModifyWordgroupPage()));
+void pushModifyTags(BuildContext context) {
+  Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (context) => const ModifyTagPage()));
 }
 
 void pushFlashcards(BuildContext context, Set<Tag> wgs) {
@@ -35,5 +35,5 @@ void pushTypingPractice(BuildContext context, Set<Tag> wgs) {
 
 void pushModifyWordpairsOfGroup(BuildContext context, int wgId) {
   Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => EditWordpairsOfWordgroupPage(wordgroupId: wgId)));
+      builder: (context) => EditWordpairsOfTagPage(tagId: wgId)));
 }
